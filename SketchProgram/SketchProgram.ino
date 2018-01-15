@@ -44,12 +44,12 @@ void loop() {
       //
       while(left_sens == HIGH && right_sens == HIGH)
       {
-        // do something
+        // do something like stop
       }
       
       // If left sensor is HIGH, detects the black line, adjust left.
       // Turn left until input goes low.
-      while(left_sens == HIGH)
+      while(left_sens == HIGH && right_sens == LOW)
       {
         // Pivot Left
         wheelsPivotLeft();
@@ -57,7 +57,7 @@ void loop() {
 
       // If right sensor is HIGH, detects the black line, adjust right.
       // Turn right until input goes low.
-      while(left_sens == HIGH)
+      while(left_sens == LOW && right_sens == HIGH)
       {
         // Pivot Right
         wheelsPivotRight();
