@@ -35,33 +35,32 @@ void loop() {
     // Forward ------
     wheelsForward();
     // -----
-
-    // Sensors check
-    if(left_sens == HIGH || right_sens == HIGH)
+  }
+  // Sensors check
+  else if(left_sens == HIGH || right_sens == HIGH)
+  {
+    // If both sensors are HIGH, both detect black.
+    // Happens at "T" and "+" junctions.
+    //
+    while(left_sens == HIGH && right_sens == HIGH)
     {
-      // If both sensors are HIGH, both detect black.
-      // Happens at "T" and "+" junctions.
-      //
-      while(left_sens == HIGH && right_sens == HIGH)
-      {
-        // do something like stop
-      }
-      
-      // If left sensor is HIGH, detects the black line, adjust left.
-      // Turn left until input goes low.
-      while(left_sens == HIGH && right_sens == LOW)
-      {
-        // Pivot Left
-        wheelsPivotLeft();
-      }
+      // do something like stop
+    }
 
-      // If right sensor is HIGH, detects the black line, adjust right.
-      // Turn right until input goes low.
-      while(left_sens == LOW && right_sens == HIGH)
-      {
-        // Pivot Right
-        wheelsPivotRight();
-      }
+    // If left sensor is HIGH, detects the black line, adjust left.
+    // Turn left until input goes low.
+    while(left_sens == HIGH && right_sens == LOW)
+    {
+      // Pivot Left
+      wheelsPivotLeft();
+    }
+
+    // If right sensor is HIGH, detects the black line, adjust right.
+    // Turn right until input goes low.
+    while(left_sens == LOW && right_sens == HIGH)
+    {
+      // Pivot Right
+      wheelsPivotRight();
     }
   }
 }
