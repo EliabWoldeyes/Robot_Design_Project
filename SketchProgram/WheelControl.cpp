@@ -1,8 +1,6 @@
 #include "Arduino.h"
 #include "WheelControl.h"
 
-
-
 //----------------------LEFT WHEEL FUNCTIONS----------------
 
 //turn the left wheel forward
@@ -24,6 +22,7 @@ void leftWheelStop()
 {
   digitalWrite(left_AB, LOW);
   digitalWrite(left_AA, LOW);
+
 }
 
 
@@ -34,6 +33,7 @@ void rightWheelForward()
 {
   digitalWrite(right_BB, LOW);
   digitalWrite(right_BA, HIGH); // Same as L911OS chart
+
 }
 
 //turn the right wheel backward
@@ -48,4 +48,5 @@ void rightWheelStop()
 {
   digitalWrite(right_BB, LOW);
   digitalWrite(right_BA, LOW);
+
 }

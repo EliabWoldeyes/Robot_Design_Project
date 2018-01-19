@@ -4,8 +4,8 @@
 
 void moveForward()
 {
+  leftWheelForward();
 	rightWheelForward();
-	leftWheelForward();
 }
 
 void fullStop()

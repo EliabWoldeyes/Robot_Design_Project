@@ -17,6 +17,10 @@
 	const int right_sens = 7;
 	const int left_sens = 8;
 
+  // Medium speed
+  const int medSpeed = 150;
+  const int rightSpeed = medSpeed + 20;
+
 	void leftWheelForward();
 
 	void leftWheelBackward();
@@ -28,5 +32,6 @@
 	void rightWheelBackward();
 
 	void rightWheelStop();
+
 
 #endif
