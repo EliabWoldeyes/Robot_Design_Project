@@ -32,9 +32,9 @@ void loop() {
   {
     // Forward ------
     moveForward();
-    delayMicroseconds(1200);
-    fullStop();
-    delayMicroseconds(2041 - 1200);
+    //delayMicroseconds(1200);
+    //fullStop();
+    //delayMicroseconds(2041 - 1200);
     // -----
   }
   // Sensors check
@@ -52,6 +52,10 @@ void loop() {
     // Turn left until input goes low.
     while(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW)
     {
+      if(digitalRead(right_sens) == HIGH && digitalRead(left_sens) == HIGH){
+        fullStop();
+        break;
+      }
       // Pivot Left
       turnLeft();
     }
@@ -61,6 +65,10 @@ void loop() {
       
     while(digitalRead(left_sens) == LOW && digitalRead(right_sens) == HIGH)
     {
+      if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
+        fullStop();
+        break;
+      }
       // Pivot Right
       turnRight();
     }
