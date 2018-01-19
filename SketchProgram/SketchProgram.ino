@@ -1,15 +1,11 @@
-// Pins for Motor B
-const int right_BB = 5;
-const int right_BA = 6;
+#include "WheelControl.h" //pin constants defined here
+#include "DirectionControl.h"
 
-// Pins for Motor A
-const int left_AB = 9;
-const int left_AA = 10;
 
-// Pins for sensor inputs
-const int right_sens = 7;
-const int left_sens = 8;
 
+  boolean tmp = false;
+
+  
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -29,11 +25,12 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
+ // put your main code here, to run repeatedly:
   if(left_sens == LOW && right_sens == LOW)
   {
     // Forward ------
-    wheelsForward();
+    moveForward();
     // -----
   }
   // Sensors check
@@ -45,6 +42,7 @@ void loop() {
     while(left_sens == HIGH && right_sens == HIGH)
     {
       // do something like stop
+      fullStop();
     }
 
     // If left sensor is HIGH, detects the black line, adjust left.
@@ -52,7 +50,7 @@ void loop() {
     while(left_sens == HIGH && right_sens == LOW)
     {
       // Pivot Left
-      wheelsPivotLeft();
+      turnLeft();
     }
 
     // If right sensor is HIGH, detects the black line, adjust right.
@@ -60,42 +58,7 @@ void loop() {
     while(left_sens == LOW && right_sens == HIGH)
     {
       // Pivot Right
-      wheelsPivotRight();
+      turnRight();
     }
   }
 }
-
-// Wheel controls start -----
-
-void wheelsForward()
-{
-  digitalWrite(left_AB, HIGH);
-  digitalWrite(left_AA, LOW);   // Opposite of L911OS chart
-  
-  digitalWrite(right_BB, LOW);
-  digitalWrite(right_BA, HIGH); // Same as L911OS chart
-}
-
-void wheelsPivotLeft()
-{
-  // Stop left wheel
-  digitalWrite(left_AB, LOW);
-  digitalWrite(left_AA, LOW);
-  
-  // Keep right wheel turning
-  digitalWrite(right_BB, LOW);
-  digitalWrite(right_BA, HIGH);
-}
-
-void wheelsPivotRight()
-{
-  // Keep right wheel turning
-  digitalWrite(left_AB, HIGH);
-  digitalWrite(left_AA, LOW);
-  
-  // Stop right wheel
-  digitalWrite(right_BB, LOW);
-  digitalWrite(right_BA, LOW);
-}
-
-// Wheel controls end -----
