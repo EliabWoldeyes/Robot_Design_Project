@@ -4,14 +4,20 @@
 
 void moveForward()
 {
-  leftWheelForward();
+ 	leftWheelForward();
 	rightWheelForward();
+}
+
+void moveBackward()
+{
+	leftWheelBackward();
+	rightWheelBackward();
 }
 
 void fullStop()
 {
-	rightWheelStop();
 	leftWheelStop();
+	rightWheelStop();
 }
 
 /*	NOTE: turnLeft() and turnRight() do not control
@@ -29,8 +35,8 @@ void turnLeft()
 //turns right (pivoting on right wheel)
 void turnRight()
 {
-	rightWheelStop();
 	leftWheelForward();
+	rightWheelStop();
 }
 
 /*	Attempt at 90 degree turn functions. Delay is
