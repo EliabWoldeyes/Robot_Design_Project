@@ -7,6 +7,8 @@
 
 	void moveForward();
 
+	void moveBackward();
+
 	void fullStop();
 
 	void turnLeft();
