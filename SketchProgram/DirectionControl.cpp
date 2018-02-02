@@ -38,6 +38,20 @@ void turnRight()
 	leftWheelForward();
 	rightWheelStop();
 }
+// spinning may be more efficient than pivots. Something to experiment with.
+// Clock wise spin the robot
+void clockwiseSpin()
+{
+	leftWheelForward();
+	rightWheelBackward();
+}
+
+// Counter clock wise spin the robot
+void counterClockSpin()
+{
+	leftWheelBackward();
+	rightWheelForward();
+}
 
 /*	Attempt at 90 degree turn functions. Delay is
 	hardcoded from observing approximately 90
