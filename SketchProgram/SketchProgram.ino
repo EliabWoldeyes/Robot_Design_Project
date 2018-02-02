@@ -1,12 +1,16 @@
-#include "WheelControl.h" //pin constants defined here
+#include "WheelControl.h" //wheel pin constants defined here
+#include "SensorControl.h" //sensor pin constants defined here
 #include "DirectionControl.h"
+#include "RobotStates.h"
 
 // Black is low from sensor, but digitalRead as high
 // White is high from sensor, but digitalRead as low
 
-  boolean tmp = false;
+RobotState robotState = {
+  BEGIN,   //previous state
+  BEGIN    //current state
+};
 
-  
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -27,7 +31,50 @@ void setup() {
 
 void loop() {
 
- // put your main code here, to run repeatedly:
+  if(leftLow() && rightLow()){
+    moveForward();
+  }
+
+  else if(leftHigh() && rightLow()) {
+    
+    updateRobotState(robotState,RIGHT);
+    
+    while(leftHigh() && rightLow()){
+      turnLeft();
+    }
+//    moveForward();
+  }
+
+  else if(leftLow() && rightHigh()) {
+    while(leftLow() && rightHigh()) {
+      turnRight();
+    }
+  }
+
+  else {
+    fullStop();
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------INITIAL CODE----------------------------------------------------------
+void initialCode(){
+
+   // put your main code here, to run repeatedly:
   
   // If both sensors see white, this assumes black line is between the two sensors
   if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
