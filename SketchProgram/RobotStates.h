@@ -13,9 +13,9 @@
 		CROSS_JUNCTION
 	};
 
- struct RobotState {
-  enum State previousState;
-  enum State currentState;
- };
+	struct RobotState {
+		enum State previousState;
+		enum State currentState;
+	};
 
 #endif
