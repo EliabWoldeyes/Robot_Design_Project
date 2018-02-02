@@ -5,12 +5,17 @@
 	#define ROBOT_STATES
 
 	//Some sample states
-	enum state {
+	enum State {
 		STOP,
 		LEFT,
 		RIGHT,
 		T_JUNCTION,
 		CROSS_JUNCTION
-	}
+	};
+
+ struct RobotState {
+  enum State previousState;
+  enum State currentState;
+ };
 
 #endif
