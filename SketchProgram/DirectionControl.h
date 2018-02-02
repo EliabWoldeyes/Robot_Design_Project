@@ -15,6 +15,9 @@
 
 	void turnRight();
 
+	void clockwiseSpin();
+	void counterClockSpin();
+
 	void turnLeft90Degrees();
 
 	void turnRight90Degrees();
