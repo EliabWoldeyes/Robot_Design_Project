@@ -67,8 +67,21 @@ void loop() {
 //    }
 //
 //    else{
-//      while(leftHigh() || rightHigh()){
+//      while(!leftHigh() && !rightHigh()){
 //        moveBackward();
+//      }
+//
+//      updateRobotState(robotState,determineRobotState());
+//
+//      if(robotState.currentState == LEFT) {
+//        while(leftHigh()){
+//          counterClockSpin(); 
+//        }
+//      }
+//      else if(robotState.currentState == RIGHT) {
+//        while(rightHigh()){
+//          clockwiseSpin();
+//        }
 //      }
 //      
 //    }
@@ -124,8 +137,11 @@ void initialCode(){
         // Assume finished maze
         while(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH)
         {
-          fullStop();   // loops until reset 
+          fullStop();   // loops until reset
         }
+      }else {
+
+        break;
       }
     }
     
@@ -159,9 +175,9 @@ void initialCode(){
 int checkEnd()
 {
   moveForward();
-  delay(100);
+  delay(200);
   fullStop();
-  delay(100);
+  delay(50);
   
   // Check if both sensors still detect black. If true, assume at end of the maze since it is a solid black square
   if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH)
@@ -182,16 +198,20 @@ int checkEnd()
     updateRobotState(robotState,determineRobotState());
     
     // if back to both black
-    if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH)
+    if(digitalRead(left_sens) == HIGH || digitalRead(right_sens) == HIGH)
     {
       // must pick a direction, chance of running off the course due to dead ends.
       // At T junction pivot. This logically doesn't work at "+" junction
       // example pivot left
       if(robotState.currentState == LEFT) {
-        counterClockSpin();
+        while(leftHigh() || rightLow()){
+          counterClockSpin(); 
+        }
       }
       else if(robotState.currentState == RIGHT) {
-        clockwiseSpin();
+        while(rightHigh() || leftLow()){
+          clockwiseSpin();
+        }
       }
 
       
