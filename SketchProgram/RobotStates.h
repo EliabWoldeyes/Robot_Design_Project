@@ -6,7 +6,7 @@
 
 	//Some sample states
 	enum State {
-    BEGIN,
+    FORWARD,
 		STOP,
 		LEFT,
 		RIGHT,
@@ -19,7 +19,7 @@
 		enum State currentState;
 	};
 
-//  State determineRobotState();
+  State determineRobotState();
 
   void updateRobotState(RobotState curState, State newState);
 
