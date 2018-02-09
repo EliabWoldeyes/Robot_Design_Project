@@ -2,9 +2,20 @@
 #include "RobotStates.h"
 #include "SensorControl.h"
 
-//Returns a state value depending on last state and current sensor data
+//Returns a state value depending on current sensor data
 State determineRobotState(){
-  return STOP;
+
+  if(leftHigh() && rightLow()){
+    return LEFT;
+  }
+
+  else if(leftLow() && rightHigh()){
+    return RIGHT;
+  }
+
+  else{
+    return FORWARD;
+  }
 }
 
 //Update the new Robot state setting:

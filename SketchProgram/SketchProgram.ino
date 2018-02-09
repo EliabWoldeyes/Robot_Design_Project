@@ -7,8 +7,8 @@
 // White is high from sensor, but digitalRead as low
 
 RobotState robotState = {
-  BEGIN,   //previous state
-  BEGIN    //current state
+  FORWARD,   //previous state
+  FORWARD    //current state
 };
 
 void setup() {
@@ -31,29 +31,51 @@ void setup() {
 
 void loop() {
 
-  if(leftLow() && rightLow()){
-    moveForward();
-  }
-
-  else if(leftHigh() && rightLow()) {
-    
-    updateRobotState(robotState,RIGHT);
-    
-    while(leftHigh() && rightLow()){
-      turnLeft();
-    }
+//  if(leftLow() && rightLow()){
 //    moveForward();
-  }
+//  }
+//
+//  else if(leftHigh() && rightLow()) {
+//    
+////    updateRobotState(robotState,RIGHT);
+//
+//    while(leftHigh() && rightLow()){
+//      counterClockSpin();
+//    }
+////    moveForward();
+//  }
+//
+//  else if(leftLow() && rightHigh()) {
+//    
+//    while(leftLow() && rightHigh()) {
+//      clockwiseSpin();
+//    }
+//    
+//  }
+//
+//  else if(leftHigh() && rightHigh()) {
+//    //move foward a little bit and stop
+//    moveForward();
+//    delay(50);
+//    fullStop();
+//
+//    //reached the end so stop
+//    if(leftHigh() && rightHigh()){
+//      while(leftHigh() && rightHigh()){
+//        fullStop();
+//      }
+//    }
+//
+//    else{
+//      while(leftHigh() || rightHigh()){
+//        moveBackward();
+//      }
+//      
+//    }
+////    checkEnd();
+//  }
 
-  else if(leftLow() && rightHigh()) {
-    while(leftLow() && rightHigh()) {
-      turnRight();
-    }
-  }
-
-  else {
-    fullStop();
-  }
+initialCode();
 
 }
 
@@ -116,7 +138,7 @@ void initialCode(){
         break;  // evaluate if end in first check for both sensors black, just break
       }
       // Pivot Left
-      turnLeft();
+      counterClockSpin();
     }
 
     // If right sensor is HIGH, detects the black line, adjust right.
@@ -128,7 +150,7 @@ void initialCode(){
         break;  // evaluate if end in first check for both sensors black, just break
       }
       // Pivot Right
-      turnRight();
+      clockwiseSpin();
     }
     
   }
@@ -137,7 +159,9 @@ void initialCode(){
 int checkEnd()
 {
   moveForward();
-  delayMicroseconds(50);
+  delay(100);
+  fullStop();
+  delay(100);
   
   // Check if both sensors still detect black. If true, assume at end of the maze since it is a solid black square
   if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH)
@@ -146,23 +170,31 @@ int checkEnd()
     return 1;
   }
   // check if both white. Not the end so need to back track.
-  else if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
+  else if(digitalRead(left_sens) == LOW || digitalRead(right_sens) == LOW)
   {
     // Reverse until at least one sensor detects black
     while(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
     {
-      //reverse 
+      moveBackward();
     }
+    
+    fullStop();
+    updateRobotState(robotState,determineRobotState());
+    
     // if back to both black
     if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH)
     {
       // must pick a direction, chance of running off the course due to dead ends.
       // At T junction pivot. This logically doesn't work at "+" junction
       // example pivot left
-      while(digitalRead(left_sens) == HIGH)
-      {
-        turnLeft();
+      if(robotState.currentState == LEFT) {
+        counterClockSpin();
       }
+      else if(robotState.currentState == RIGHT) {
+        clockwiseSpin();
+      }
+
+      
       // Then return 0 and continue normal operation
       return 0;
     }
