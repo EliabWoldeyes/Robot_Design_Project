@@ -15,6 +15,14 @@ boolean leftHigh(){
 	return digitalRead(left_sens) == HIGH;
 }
 
+boolean middleLow(){
+	return digitalRead(middle_sens) == LOW;
+}
+
+boolean middleHigh(){
+	return digitalRead(middle_sens) == HIGH;
+}
+
 //right sensor reading LOW
 boolean rightLow(){
 	return digitalRead(right_sens) == LOW;
