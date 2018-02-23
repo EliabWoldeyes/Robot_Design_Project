@@ -241,8 +241,8 @@ void initialCode(){
       }
       fullStop();
     }
-    // case where middle already on black. state digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW 
-    else{
+    // case where middle already on black. state  
+    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
 
       while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW)
       {
@@ -273,7 +273,7 @@ void initialCode(){
       fullStop();
     }
     // 
-    else
+    else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
     {
       while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH )
       {
@@ -435,10 +435,10 @@ int junctionDecision()
               fullStop();
               break;
               
-            case(0b101):
-              while(digitalRead(middle_sens) == LOW){
-                moveBackward();
-              }
+            case(0b101): // odd ball
+              //while(digitalRead(middle_sens) == LOW){
+                
+              //}
               fullStop();
               break;
               
@@ -469,6 +469,7 @@ int junctionDecision()
         info->rightState = 2;
         info->backState = 1;
 
+        currState = currState + 1;
         count = count + 1;
         info = info + 1;
       }
@@ -477,9 +478,9 @@ int junctionDecision()
     } else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
       // State for the Junction ------------
 
-      // returned to previous junction
+      // returned to previous junction, so increment
       if(currState < count){
-        // ---
+        currState = currState + 1;
       } else { // new junction
         info = (junction_info*)malloc(sizeof(junction_info));
     
@@ -487,7 +488,8 @@ int junctionDecision()
         info->forState = 0;
         info->rightState = 2;
         info->backState = 1;
-  
+
+        currState = currState + 1;
         count = count + 1;
         info = info + 1;
       }
@@ -688,6 +690,7 @@ int junctionDecision()
           //decisionMade = 1;
 
           // pointer to previous state
+          currState = currState - 1;
           info = info - 1;
           
         } else if(info->rightState == 1){
@@ -754,6 +757,7 @@ int junctionDecision()
           //decisionMade = 1;
 
           // pointer to previous junction
+          currState = currState - 1;
           info = info - 1;
           
         }
@@ -892,10 +896,10 @@ int End_OR_turnleft(){
               fullStop();
               break;
               
-            case(0b101):
-              while(digitalRead(middle_sens) == LOW){
-                moveBackward();
-              }
+            case(0b101): // odd ball
+              //while(digitalRead(middle_sens) == LOW){
+                
+              //}
               fullStop();
               break;
               
