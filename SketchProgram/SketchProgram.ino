@@ -458,9 +458,11 @@ int junctionDecision()
         }
         
       }// State for the "+" Junction after re-aligning --------------
-      // back at previous junction.
+      // back at previous junction so decrement the direction came from to 0, since only returning to previous junction if the recent junction was exhausted.
       if(currState < count){
         // ---
+        info->backState = 0;
+        currState = currState + 1;
       } else{ // new junction
         info = (junction_info*)malloc(sizeof(junction_info));
   
@@ -478,8 +480,9 @@ int junctionDecision()
     } else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
       // State for the Junction ------------
 
-      // returned to previous junction, so increment
+      // back at previous junction so decrement the direction came from to 0, since only returning to previous junction if the recent junction was exhausted.
       if(currState < count){
+        info->backState = 0;
         currState = currState + 1;
       } else { // new junction
         info = (junction_info*)malloc(sizeof(junction_info));
@@ -914,14 +917,14 @@ int End_OR_turnleft(){
               break;
             default:
               break;
-            }
+           }
           
-          }
-        }
-      } // "T" junction
-      else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
-        // dont need to do anything, since it didn't advance and always pick left
-      }
+         }
+       }
+    } // "T" junction
+    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
+      // dont need to do anything, since it didn't advance and always pick left
+    }
     
 
     // After re-lign, always go left at the junction
