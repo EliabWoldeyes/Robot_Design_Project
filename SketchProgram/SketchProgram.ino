@@ -462,7 +462,7 @@ int junctionDecision()
       if(currState < count){
         // ---
         info->backState = 0;
-        currState = currState + 1;
+        count = currState;
       } else{ // new junction
         info = (junction_info*)malloc(sizeof(junction_info));
   
@@ -483,7 +483,7 @@ int junctionDecision()
       // back at previous junction so decrement the direction came from to 0, since only returning to previous junction if the recent junction was exhausted.
       if(currState < count){
         info->backState = 0;
-        currState = currState + 1;
+        count = currState;
       } else { // new junction
         info = (junction_info*)malloc(sizeof(junction_info));
     
@@ -660,6 +660,7 @@ int junctionDecision()
           //decisionMade = 1;
 
           // pointer to previous junction
+          currState = currState - 1;
           info = info - 1;          
           
         } else if(info->forState == 1){
