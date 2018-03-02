@@ -164,7 +164,7 @@ void initialCode(){
   else if (digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW)
   {
     // if no detection.
-    while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digital(right_sens) == LOW){
+    while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW){
        clockwiseSpin();
     }
     fullStop();
