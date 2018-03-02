@@ -257,12 +257,12 @@ void initialCode(){
       }
       fullStop();
       
-      while(digitalRead(middle_sens) == LOW){
+      while(digitalRead(middle_sens) == HIGH){
          counterClockSpin();
       }
       fullStop();
       
-      while(digitalRead(middle_sens) == HIGH){
+      while(digitalRead(middle_sens) == LOW){
          counterClockSpin();
       }
       fullStop();
@@ -298,12 +298,12 @@ void initialCode(){
       }
       fullStop();
       
-      while(digitalRead(middle_sens) == LOW){
+      while(digitalRead(middle_sens) == HIGH){
         clockwiseSpin();
       }
       fullStop();
       
-      while(digitalRead(middle_sens) == HIGH){
+      while(digitalRead(middle_sens) == LOW){
         clockwiseSpin();
       }
       fullStop();
@@ -853,8 +853,6 @@ int End_OR_turnleft(){
     {
       moveForward();
       delay(100);
-      fullStop();
-      delay(50);
       fullStop();
 
       // move forward, and if all still black then assume it is the END
