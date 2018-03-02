@@ -852,7 +852,7 @@ int End_OR_turnleft(){
     if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
     {
       moveForward();
-      delay(200);
+      delay(100);
       fullStop();
       delay(50);
       fullStop();
