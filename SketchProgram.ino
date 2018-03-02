@@ -201,6 +201,10 @@ void initialCode(){
     // --- ---
     // left turn
     else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
+      while(digitalRead(left_sens) == HIGH){
+          moveForward();
+        }
+      fullStop();
       while(digitalRead(middle_sens) == HIGH){
           //counterClockSpin();
           turnLeft();
@@ -215,6 +219,11 @@ void initialCode(){
     }
     // turn right
     else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+
+      while(digitalRead(right_sens) == HIGH){
+          moveForward();
+        }
+      fullStop();
       while(digitalRead(middle_sens) == HIGH){
           //counterClockSpin();
           turnRight();
@@ -230,6 +239,8 @@ void initialCode(){
 
     else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW)
       {
+
+        
         while(digitalRead(middle_sens) == LOW)
         {
           if(digitalRead(right_sens) == HIGH && digitalRead(left_sens) == HIGH){
@@ -243,6 +254,8 @@ void initialCode(){
       }
 
     else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
+
+        
         while(digitalRead(middle_sens) == LOW){
           if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
             fullStop();
@@ -1025,16 +1038,20 @@ int End_OR_turnleft(){
     // After re-lign, always go left at the junction
     else{
       // counter clock spin middle sensor off black if "+" junction if "+"
+      while(digitalRead(left_sens) == HIGH){
+          moveForward();
+        }
+      fullStop();
       while(digitalRead(middle_sens) == HIGH){
-        counterClockSpin(); 
-        //turnLeft();
+        //counterClockSpin(); 
+        turnLeft();
       }
       fullStop();
   
       // counter clock spin middle to the left black line of the junction.
       while(digitalRead(middle_sens) == LOW){
-        counterClockSpin();   // may use pivot if spin doesn't clear some lines
-        //turnLeft();
+        //counterClockSpin();   // may use pivot if spin doesn't clear some lines
+        turnLeft();
       }
       fullStop();
       
