@@ -108,8 +108,8 @@ void loop() {
 ////    checkEnd();
 //  }
 
-initialCode();
-
+//initialCode();
+follow();
 }
 
 
@@ -148,14 +148,15 @@ void follow(){
     // solves dead end.
 
     // bounce left
-    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW){
+    else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW){
 
       while (digitalRead(left_sens) == HIGH){
         counterClockSpin();
       }
       fullStop();
     }
-    else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
+    //bounce right
+    else if(digitalRead(left_sens) == LOW &&  digitalRead(right_sens) == HIGH){
       while (digitalRead(right_sens) == HIGH){
         clockwiseSpin();
       }
@@ -198,46 +199,12 @@ void follow(){
       }
     }
     // --- ---
-    // left turn
-    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
-      moveForward();
-      delay(50);
-      fullStop();
-      while(digitalRead(middle_sens) == HIGH){
-          //counterClockSpin();
-          turnLeft();
-        }
-        fullStop();
-        
-        while(digitalRead(middle_sens) == LOW){
-          turnLeft();
-          //counterClockSpin();
-        }
-        fullStop();
-    }
-    // turn right
-    else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
-
-      moveForward();
-      delay(50);
-      fullStop();
-      while(digitalRead(middle_sens) == HIGH){
-          //counterClockSpin();
-          turnRight();
-        }
-        fullStop();
-        
-        while(digitalRead(middle_sens) == LOW){
-          turnRight();
-          //counterClockSpin();
-        }
-        fullStop();
-    }
+    
     else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
       if(End_OR_turnleft() == 1)
         {
           // Assume finished maze
-          while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
+          while(1)
           {
             fullStop();   // loops until reset
           }
