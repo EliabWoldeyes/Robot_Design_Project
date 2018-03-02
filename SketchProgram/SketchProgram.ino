@@ -199,7 +199,33 @@ void initialCode(){
     }
   }
   // --- ---
-
+  // left turn
+  else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
+    while(digitalRead(middle_sens) == HIGH){
+         //counterClockSpin();
+        turnLeft();
+      }
+      fullStop();
+      
+      while(digitalRead(middle_sens) == LOW){
+        turnLeft();
+         //counterClockSpin();
+      }
+      fullStop();
+  }
+  else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+    while(digitalRead(middle_sens) == HIGH){
+         //counterClockSpin();
+        turnRight();
+      }
+      fullStop();
+      
+      while(digitalRead(middle_sens) == LOW){
+        turnRight();
+         //counterClockSpin();
+      }
+      fullStop();
+  }
   // #3
   // middle sensor still black and one of the side sensors is on black.
   // OR middle is white but one of the sides is on black.
@@ -259,12 +285,12 @@ void initialCode(){
       
       while(digitalRead(middle_sens) == HIGH){
          //counterClockSpin();
-        turnRight();
+        turnLeft();
       }
       fullStop();
       
       while(digitalRead(middle_sens) == LOW){
-        turnRight();
+        turnLeft();
          //counterClockSpin();
       }
       fullStop();
@@ -302,13 +328,13 @@ void initialCode(){
       
       while(digitalRead(middle_sens) == HIGH){
         //clockwiseSpin();
-        turnLeft();
+        turnRight();
       }
       fullStop();
       
       while(digitalRead(middle_sens) == LOW){
         //clockwiseSpin();
-        turnLeft();
+        turnRight();
       }
       fullStop();
     }
