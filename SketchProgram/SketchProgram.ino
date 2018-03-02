@@ -149,8 +149,14 @@ void follow(){
 
     // bounce left
     else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW){
-
+    
       while (digitalRead(left_sens) == HIGH){
+        if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
+      {
+        while(1){
+          fullStop();
+        }
+      }
         counterClockSpin();
       }
       fullStop();
@@ -158,11 +164,17 @@ void follow(){
     //bounce right
     else if(digitalRead(left_sens) == LOW &&  digitalRead(right_sens) == HIGH){
       while (digitalRead(right_sens) == HIGH){
+        if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
+      {
+        while(1){
+          fullStop();
+        }
+      }
         clockwiseSpin();
       }
       fullStop();
     }
-    /*
+    
     else if (digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW)
     {
       // if no detection.
@@ -197,7 +209,7 @@ void follow(){
         }
         fullStop();
       }
-    }*/
+    }
     // --- ---
     
     else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
