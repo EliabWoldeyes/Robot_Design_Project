@@ -201,9 +201,8 @@ void initialCode(){
     // --- ---
     // left turn
     else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
-      while(digitalRead(left_sens) == HIGH){
-          moveForward();
-        }
+      moveForward();
+      delay(100);
       fullStop();
       while(digitalRead(middle_sens) == HIGH){
           //counterClockSpin();
@@ -220,9 +219,8 @@ void initialCode(){
     // turn right
     else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
 
-      while(digitalRead(right_sens) == HIGH){
-          moveForward();
-        }
+      moveForward();
+      delay(100);
       fullStop();
       while(digitalRead(middle_sens) == HIGH){
           //counterClockSpin();
@@ -1038,9 +1036,8 @@ int End_OR_turnleft(){
     // After re-lign, always go left at the junction
     else{
       // counter clock spin middle sensor off black if "+" junction if "+"
-      while(digitalRead(left_sens) == HIGH){
-          moveForward();
-        }
+      moveForward();
+      delay(100);
       fullStop();
       while(digitalRead(middle_sens) == HIGH){
         //counterClockSpin(); 
