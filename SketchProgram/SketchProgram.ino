@@ -200,18 +200,32 @@ void follow(){
     }
     // --- ---
     
-    else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
-      if(End_OR_turnleft() == 1)
-        {
+    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
           // Assume finished maze
           while(1)
           {
             fullStop();   // loops until reset
           }
-        }
+     
       
     }
-  
+    else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          moveForward();
+          delay(50);
+          fullStop();
+          while(digitalRead(middle_sens) == HIGH){
+            //counterClockSpin(); 
+            turnLeft();
+          }
+          fullStop();
+      
+          // counter clock spin middle to the left black line of the junction.
+          while(digitalRead(middle_sens) == LOW){
+            //counterClockSpin();   // may use pivot if spin doesn't clear some lines
+            turnLeft();
+          }
+          fullStop();
+    }
 }
 /* FSM
  * #1: 010 - Forward
@@ -353,7 +367,7 @@ void initialCode(){
       if(End_OR_turnleft() == 1)
         {
           // Assume finished maze
-          while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
+          while(1)
           {
             fullStop();   // loops until reset
           }
