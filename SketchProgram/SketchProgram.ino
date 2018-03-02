@@ -109,7 +109,8 @@ void loop() {
 //  }
 
 //initialCode();
-follow();
+//follow();
+bounce();
 }
 
 
@@ -128,6 +129,50 @@ follow();
 
 //--------------------------------------------------------INITIAL CODE----------------------------------------------------------
 // 2 sensor follow
+
+// bounce
+void bounce(){
+
+  while(digitalRead(left_sens) == LOW){
+    clockwiseSpin();
+  }
+
+  if(digitalRead(left_sens) == HIGH){
+
+    //end
+      if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+        while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          fullStop();
+        }
+        // always left after checking if not end
+        if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          moveForward();
+          delay(50);
+          fullStop();
+          while(digitalRead(middle_sens) == HIGH){
+            //counterClockSpin(); 
+            turnLeft();
+          }
+          fullStop();
+      
+          // counter clock spin middle to the left black line of the junction.
+          while(digitalRead(middle_sens) == LOW){
+            //counterClockSpin();   // may use pivot if spin doesn't clear some lines
+            turnLeft();
+          }
+          fullStop();
+        }
+      } else {
+        while(digitalRead(right_sens) == LOW){
+          counterClockSpin();
+        }  
+      }
+      
+   }
+}
+  
+
+// follow
 
 void follow(){
 
@@ -155,7 +200,6 @@ void follow(){
           fullStop();
         }
         // always left after checking if not end
-      } else  
         if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
           moveForward();
           delay(50);
@@ -173,6 +217,7 @@ void follow(){
           }
           fullStop();
         }
+      } 
            
     // bounce left
       while(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW)
