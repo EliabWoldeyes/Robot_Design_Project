@@ -173,7 +173,7 @@ void follow(){
           }
           fullStop();
         }
-      }     
+           
     // bounce left
       while(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW)
       {
@@ -193,8 +193,8 @@ void follow(){
         // Pivot Right
         clockwiseSpin();
       }
-      
-}
+    }
+
 
     /*
     // bounce left
@@ -231,7 +231,7 @@ void follow(){
       fullStop();
     }
     */
-    /*
+    
     else if (digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW)
     {
       fullStop();
@@ -269,7 +269,7 @@ void follow(){
       }
     }
 
-}*/
+}
 /* FSM
  * #1: 010 - Forward
  * #2: 000 - Dead end and correction.
