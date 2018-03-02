@@ -243,7 +243,7 @@ void initialCode(){
       }
       fullStop();
     }
-    // case where middle already on black. state  
+    // turn left
     else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
 
       while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW)
@@ -253,14 +253,24 @@ void initialCode(){
           break;  // evaluate if end in first check for both sensors black, just break
         }
         // Pivot Left
-        counterClockSpin();
+         //counterClockSpin();
+      }
+      fullStop();
+      
+      while(digitalRead(middle_sens) == LOW){
+         counterClockSpin();
+      }
+      fullStop();
+      
+      while(digitalRead(middle_sens) == HIGH){
+         counterClockSpin();
       }
       fullStop();
       
     }
 
     
-    // If right sensor is HIGH, detects the black line, adjust right.
+    // If right sensor is HIGH, detects the black line, adjust right. RE-ALIGN
     // case where middle is not one black
     // Turn right until input goes low.
     if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
@@ -274,7 +284,7 @@ void initialCode(){
       }
       fullStop();
     }
-    // 
+    // Turn right
     else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
     {
       while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH )
@@ -284,6 +294,16 @@ void initialCode(){
           break;  // evaluate if end in first check for both sensors black, just break
         }
         // Pivot Right
+        //clockwiseSpin();
+      }
+      fullStop();
+      
+      while(digitalRead(middle_sens) == LOW){
+        clockwiseSpin();
+      }
+      fullStop();
+      
+      while(digitalRead(middle_sens) == HIGH){
         clockwiseSpin();
       }
       fullStop();
