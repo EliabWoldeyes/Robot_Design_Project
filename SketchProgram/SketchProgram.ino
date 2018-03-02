@@ -127,7 +127,125 @@ initialCode();
 
 
 //--------------------------------------------------------INITIAL CODE----------------------------------------------------------
+// 2 sensor follow
 
+void follow(){
+
+  if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
+    {
+      // Forward ------
+      moveForward();
+      
+      // Manual PWM to adjust speed
+      //delayMicroseconds(1200);
+      //fullStop();
+      //delayMicroseconds(2041 - 1200);
+      // -----
+    }
+  
+    // Since middle sensor added, this could be the normal line following if middle goes LOW before a side sensor goes HIGH too often.
+    // #2 if middle sensor does not detect the black line then check if still inbetween with a pivot in one direction.
+    // solves dead end.
+
+    // bounce left
+    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW){
+
+      while (digitalRead(left_sens) == HIGH){
+        counterClockSpin();
+      }
+      fullStop();
+    }
+    else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
+      while (digitalRead(right_sens) == HIGH){
+        clockwiseSpin();
+      }
+      fullStop();
+    }
+    
+    else if (digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW)
+    {
+      // if no detection.
+      while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW){
+         clockwiseSpin();
+      }
+      fullStop();
+      // check which sensor hits the black line first.
+
+      // situation is the line is still in the middle so adjust it so the middle sensor is back on it.
+      if (digitalRead(left_sens) == HIGH){
+        // spin counterclock until middle hits black
+        while(digitalRead(middle_sens) == LOW)
+        {
+          counterClockSpin();
+        }
+        fullStop();
+      }
+      // Situation - tape still in middle
+      else if(digitalRead(middle_sens) == HIGH)
+      {
+        fullStop();
+        // normal operation, let it loop back to #1
+      }
+      // situation - spinning clockwise and right sensor hitting first likely means it is a little bit over a deadend.
+      // Align middle sensor
+      else if(digitalRead(right_sens) == HIGH)
+      {
+        while(digitalRead(middle_sens) == LOW)
+        {
+          clockwiseSpin();
+        }
+        fullStop();
+      }
+    }
+    // --- ---
+    // left turn
+    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
+      moveForward();
+      delay(50);
+      fullStop();
+      while(digitalRead(middle_sens) == HIGH){
+          //counterClockSpin();
+          turnLeft();
+        }
+        fullStop();
+        
+        while(digitalRead(middle_sens) == LOW){
+          turnLeft();
+          //counterClockSpin();
+        }
+        fullStop();
+    }
+    // turn right
+    else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+
+      moveForward();
+      delay(50);
+      fullStop();
+      while(digitalRead(middle_sens) == HIGH){
+          //counterClockSpin();
+          turnRight();
+        }
+        fullStop();
+        
+        while(digitalRead(middle_sens) == LOW){
+          turnRight();
+          //counterClockSpin();
+        }
+        fullStop();
+    }
+    else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
+      if(End_OR_turnleft() == 1)
+        {
+          // Assume finished maze
+          while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
+          {
+            fullStop();   // loops until reset
+          }
+        }
+      
+    }
+  
+}
 /* FSM
  * #1: 010 - Forward
  * #2: 000 - Dead end and correction.
@@ -1037,7 +1155,7 @@ int End_OR_turnleft(){
     else{
       // counter clock spin middle sensor off black if "+" junction if "+"
       moveForward();
-      delay(100);
+      delay(50);
       fullStop();
       while(digitalRead(middle_sens) == HIGH){
         //counterClockSpin(); 
