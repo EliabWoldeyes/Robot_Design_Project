@@ -255,7 +255,7 @@ void initialCode(){
         // Pivot Left
          //counterClockSpin();
       }
-      fullStop();
+      //fullStop();
       
       while(digitalRead(middle_sens) == HIGH){
          //counterClockSpin();
@@ -298,7 +298,7 @@ void initialCode(){
         // Pivot Right
         //clockwiseSpin();
       }
-      fullStop();
+      //fullStop();
       
       while(digitalRead(middle_sens) == HIGH){
         //clockwiseSpin();
