@@ -213,6 +213,7 @@ void initialCode(){
       }
       fullStop();
   }
+  // turn right
   else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
     while(digitalRead(middle_sens) == HIGH){
          //counterClockSpin();
@@ -983,13 +984,15 @@ int End_OR_turnleft(){
     
     // counter clock spin middle sensor off black if "+" junction if "+"
     while(digitalRead(middle_sens) == HIGH){
-      counterClockSpin(); 
+      //counterClockSpin(); 
+      turnLeft();
     }
     fullStop();
 
     // counter clock spin middle to the left black line of the junction.
     while(digitalRead(middle_sens) == LOW){
-      counterClockSpin();   // may use pivot if spin doesn't clear some lines
+      //counterClockSpin();   // may use pivot if spin doesn't clear some lines
+      turnLeft();
     }
     fullStop();
     
