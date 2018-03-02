@@ -5,6 +5,8 @@
 
 #define STATES 4
 
+int End_OR_turnleft();
+
 // Black is low from sensor, but digitalRead as high
 // White is high from sensor, but digitalRead as low
 
@@ -307,7 +309,7 @@ void initialCode(){
   }
   
 }
-  
+/*
 int junctionDecision()
 {
 
@@ -348,7 +350,8 @@ int junctionDecision()
         2: Not explored
 
      */
-    
+  
+  /* 
   }
   else{
     /*
@@ -357,7 +360,7 @@ int junctionDecision()
     fullStop();
     delay(50);
     */
-
+/*
     // middle sensor ahead of the sides.
     
     // Check if all sensors detect black. Could be END block or "+" junction
@@ -384,7 +387,7 @@ int junctionDecision()
       // If not back on the junction, need to re-align sensors.
       if(digitalRead(left_sens) == LOW || digitalRead(middle_sens) == LOW || digitalRead(right_sens) == LOW){
         
-        while(digitalRead(left_sens) == LOW || digitalRead(middle_sens) == LOW || digitalRead(right_sens) == LOW)){
+        while(digitalRead(left_sens) == LOW || digitalRead(middle_sens) == LOW || digitalRead(right_sens) == LOW){
 
           unsigned char align = 0b000;
           if(digitalRead(left_sens) == HIGH){
@@ -772,7 +775,7 @@ int junctionDecision()
         }
       }
     //}
-
+*/
     
 
     //decisionMade = 0;
@@ -819,9 +822,9 @@ int junctionDecision()
     else
     {
       return 0;
-    }*/
+    }
   }
-}
+}*/
 
 // 3 sensor always choose left turn at junctions
 int End_OR_turnleft(){
