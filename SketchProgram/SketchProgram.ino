@@ -131,7 +131,7 @@ follow();
 
 void follow(){
 
-  if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
+  if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW)
     {
       // Forward ------
       moveForward();
@@ -147,6 +147,56 @@ void follow(){
     // #2 if middle sensor does not detect the black line then check if still inbetween with a pivot in one direction.
     // solves dead end.
 
+    else if(digitalRead(left_sens) == HIGH || digitalRead(right_sens) == HIGH){
+
+      //end
+      if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+        while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          fullStop();
+        }
+        // always left after checking if not end
+      } else  
+        if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          moveForward();
+          delay(50);
+          fullStop();
+          while(digitalRead(middle_sens) == HIGH){
+            //counterClockSpin(); 
+            turnLeft();
+          }
+          fullStop();
+      
+          // counter clock spin middle to the left black line of the junction.
+          while(digitalRead(middle_sens) == LOW){
+            //counterClockSpin();   // may use pivot if spin doesn't clear some lines
+            turnLeft();
+          }
+          fullStop();
+        }
+      }     
+    // bounce left
+      while(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW)
+      {
+        if(digitalRead(right_sens) == HIGH && digitalRead(left_sens) == HIGH){
+          fullStop();
+          break;  // evaluate if end in first check for both sensors black, just break
+        }
+      // Pivot Left
+      counterClockSpin();
+      }
+      while(digitalRead(left_sens) == LOW && digitalRead(right_sens) == HIGH)
+      {
+        if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          fullStop();
+          break;  // evaluate if end in first check for both sensors black, just break
+        }
+        // Pivot Right
+        clockwiseSpin();
+      }
+      
+}
+
+    /*
     // bounce left
     else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW){
     
@@ -180,9 +230,11 @@ void follow(){
       }
       fullStop();
     }
-    
+    */
+    /*
     else if (digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW)
     {
+      fullStop();
       // if no detection.
       while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW){
          clockwiseSpin();
@@ -216,35 +268,8 @@ void follow(){
         fullStop();
       }
     }
-    // --- ---
-    
-    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
-          // Assume finished maze
-          while(1)
-          {
-            fullStop();   // loops until reset
-          }
-     
-      
-    }
-    else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
-          moveForward();
-          delay(50);
-          fullStop();
-          while(digitalRead(middle_sens) == HIGH){
-            //counterClockSpin(); 
-            turnLeft();
-          }
-          fullStop();
-      
-          // counter clock spin middle to the left black line of the junction.
-          while(digitalRead(middle_sens) == LOW){
-            //counterClockSpin();   // may use pivot if spin doesn't clear some lines
-            turnLeft();
-          }
-          fullStop();
-    }
-}
+
+}*/
 /* FSM
  * #1: 010 - Forward
  * #2: 000 - Dead end and correction.
