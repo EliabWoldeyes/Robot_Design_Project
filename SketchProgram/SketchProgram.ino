@@ -258,12 +258,14 @@ void initialCode(){
       fullStop();
       
       while(digitalRead(middle_sens) == HIGH){
-         counterClockSpin();
+         //counterClockSpin();
+        turnRight();
       }
       fullStop();
       
       while(digitalRead(middle_sens) == LOW){
-         counterClockSpin();
+        turnRight();
+         //counterClockSpin();
       }
       fullStop();
       
@@ -299,12 +301,14 @@ void initialCode(){
       fullStop();
       
       while(digitalRead(middle_sens) == HIGH){
-        clockwiseSpin();
+        //clockwiseSpin();
+        turnLeft();
       }
       fullStop();
       
       while(digitalRead(middle_sens) == LOW){
-        clockwiseSpin();
+        //clockwiseSpin();
+        turnLeft();
       }
       fullStop();
     }
