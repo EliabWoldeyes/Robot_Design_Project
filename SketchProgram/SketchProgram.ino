@@ -154,6 +154,9 @@ void follow(){
         if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
       {
         while(1){
+          if(!(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)){
+            break;
+          }
           fullStop();
         }
       }
@@ -167,6 +170,9 @@ void follow(){
         if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
       {
         while(1){
+          if(!(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)){
+            break;
+          }
           fullStop();
         }
       }
