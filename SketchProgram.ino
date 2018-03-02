@@ -148,14 +148,15 @@ void follow(){
     // solves dead end.
 
     // bounce left
-    else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == LOW){
+    else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW){
 
       while (digitalRead(left_sens) == HIGH){
         counterClockSpin();
       }
       fullStop();
     }
-    else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
+    //bounce right
+    else if(digitalRead(left_sens) == LOW &&  digitalRead(right_sens) == HIGH){
       while (digitalRead(right_sens) == HIGH){
         clockwiseSpin();
       }
