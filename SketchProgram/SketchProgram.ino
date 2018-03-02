@@ -935,13 +935,13 @@ int End_OR_turnleft(){
     
     // counter clock spin middle sensor off black if "+" junction if "+"
     while(digitalRead(middle_sens) == HIGH){
-      counterClockSpin();
+      counterClockSpin(); 
     }
     fullStop();
 
     // counter clock spin middle to the left black line of the junction.
     while(digitalRead(middle_sens) == LOW){
-      counterClockSpin();
+      counterClockSpin();   // may use pivot if spin doesn't clear some lines
     }
     fullStop();
     
