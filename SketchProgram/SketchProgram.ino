@@ -68,7 +68,7 @@ void run(){
   // #1 If left and right sensors see white and middle sensors detects the black line.
   if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW)
   {
-    while(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW){
+    while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
       // Forward
       moveForward();
     }
@@ -199,7 +199,7 @@ void run(){
     fullStop();   
   }
   
-  // #5 T junction. always turn left.
+  // #5 T junction. always turn right.
   else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH)
   {
 
@@ -207,10 +207,10 @@ void run(){
     delay(50);
     fullStop();
     
-    // counter clock spin middle to the left black line of the junction.
+    // counter clock spin middle to the right black line of the junction.
     while(digitalRead(middle_sens) == LOW){
-      //counterClockSpin();
-      turnLeft();
+      //clockwiseSpin();
+      turnRight();
     }
     fullStop();
     
