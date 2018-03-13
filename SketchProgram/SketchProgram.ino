@@ -507,10 +507,10 @@ void HardCoded(){
       if(digitalRead(left_sens) == HIGH ){
         while(digitalRead(middle_sens) == LOW){
           if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
-        while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
-          fullStop();
-        }
-      }
+            while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+              fullStop();
+            } 
+          }
           turnLeft();
         }
       } else if(digitalRead(middle_sens) == HIGH){
@@ -518,10 +518,10 @@ void HardCoded(){
       } else if(digitalRead(right_sens) == LOW){
         while(digitalRead(middle_sens) == LOW){
           if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
-        while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
-          fullStop();
-        }
-      }
+            while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+              fullStop();
+            }
+          }
           turnRight();
         }
       }
@@ -672,7 +672,7 @@ void run(){
     // case where middle is not one black
     // Turn left until middle re-aligns
     
-    {
+    
       while(digitalRead(middle_sens) == LOW)
       {
         if( digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
@@ -687,6 +687,11 @@ void run(){
             //turnRight();
           }
           fullStop();
+        }
+        if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+            fullStop();
+          }
         }
         
         // Pivot Left
@@ -705,7 +710,7 @@ void run(){
         }
         fullStop();
       }
-    }
+    
   } // Re- align right
   else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
     // If right sensor is HIGH, detects the black line, adjust right.
@@ -726,6 +731,13 @@ void run(){
           }
           fullStop();
         }
+
+        if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+            fullStop();
+          }
+        }
+        
         // Pivot Right
         clockwiseSpin(); 
         //turnRight();
