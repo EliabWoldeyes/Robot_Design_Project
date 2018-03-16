@@ -6,11 +6,6 @@
 // Black is low from sensor, but digitalRead as high
 // White is high from sensor, but digitalRead as low
 
-RobotState robotState = {
-  FORWARD,   //previous state
-  FORWARD    //current state
-};
-
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
