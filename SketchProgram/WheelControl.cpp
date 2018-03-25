@@ -25,6 +25,11 @@ void leftWheelStop()
 
 }
 
+void leftWheelHalf(){
+  analogWrite(left_AB, 127);
+  analogWrite(left_AA, 0);   
+}
+
 
 //----------------------RIGHT WHEEL FUNCTIONS----------------
 
@@ -49,4 +54,9 @@ void rightWheelStop()
   digitalWrite(right_BB, LOW);
   digitalWrite(right_BA, LOW);
 
+}
+
+void rightWheelHalf(){
+  analogWrite(right_BA, 127);
+  analogWrite(right_BB, 0);   
 }
