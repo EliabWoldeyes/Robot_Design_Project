@@ -345,6 +345,7 @@ void HardCoded(){
         fullStop();
         break;
       }
+<<<<<<< HEAD
     }
   //fifth
     while(1){
@@ -361,6 +362,24 @@ void HardCoded(){
     // Turn left until middle re-aligns
     
     {
+=======
+    }
+  //fifth
+    while(1){
+      if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
+    {
+    while(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW){
+      // Forward
+      moveForward();
+      }
+    }
+    else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW){
+    // If left sensor is HIGH, detects the black line, adjust left.
+    // case where middle is not one black
+    // Turn left until middle re-aligns
+    
+    {
+>>>>>>> d31e76945fa48105dcd70b20c4405086937a1487
       while(digitalRead(left_sens) == HIGH)
       {
         if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
@@ -487,6 +506,7 @@ void HardCoded(){
         //turnLeft();
       }*/
       fullStop();
+<<<<<<< HEAD
 
     }
   } // Re- align right
@@ -504,6 +524,25 @@ void HardCoded(){
         }
       }
 
+=======
+
+    }
+  } // Re- align right
+    else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
+    // If right sensor is HIGH, detects the black line, adjust right.
+    // case where middle is not one black
+    // Turn right until input goes low.
+
+      while(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH){
+        moveForward();
+      }
+      if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+        while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+          fullStop();
+        }
+      }
+
+>>>>>>> d31e76945fa48105dcd70b20c4405086937a1487
       if(digitalRead(left_sens) == HIGH ){
         while(digitalRead(middle_sens) == LOW){
           if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
@@ -840,6 +879,7 @@ void run(){
     while(digitalRead(right_sens) == HIGH){
       //clockwiseSpin();
       turnRight();
+<<<<<<< HEAD
     }
     fullStop();
     
@@ -870,6 +910,38 @@ void run(){
     while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
       fullStop();
     }
+=======
+    }
+    fullStop();
+    
+    while(digitalRead(right_sens) == LOW && digitalRead(right_sens) == LOW){
+      clockwiseSpin();
+      //turnRight();
+    }
+    fullStop();
+*/
+    // counter clock spin middle sensor off black if "+" junction if "+"
+    while(digitalRead(middle_sens) == HIGH){
+      //clockwiseSpin();
+      turnRight();
+    }
+    fullStop();
+
+    // counter clock spin middle to the left black line of the junction.
+    while(digitalRead(middle_sens) == LOW){
+      //clockwiseSpin();
+      turnRight();
+     
+    }
+    
+    fullStop();
+    
+  // #6 Assume all black is END. "+" junction ignored, but code ready to deal with one if neccessary.
+  } else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+    while(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH){
+      fullStop();
+    }
+>>>>>>> d31e76945fa48105dcd70b20c4405086937a1487
   }
   }
 }
@@ -997,4 +1069,8 @@ int End_OR_turnleft(){
 
 }
 
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> d31e76945fa48105dcd70b20c4405086937a1487

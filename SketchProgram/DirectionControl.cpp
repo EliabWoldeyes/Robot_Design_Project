@@ -20,6 +20,16 @@ void fullStop()
 	rightWheelStop();
 }
 
+void archLeft(){
+  leftWheelHalf();
+  leftWheelForward();
+}
+
+void archRight(){
+  leftWheelForward();
+  rightWheelHalf();
+}
+
 /*	NOTE: turnLeft() and turnRight() do not control
 	stopping. If called in main loop, the robot
 	will keep spinning.

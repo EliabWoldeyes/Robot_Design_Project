@@ -11,6 +11,10 @@
 
 	void fullStop();
 
+  void archLeft();
+
+  void archRight();
+
 	void turnLeft();
 
 	void turnRight();
