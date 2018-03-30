@@ -1,3 +1,5 @@
+//Author: Jonathan Chan
+
 #include "WheelControl.h" //wheel pin constants defined here
 #include "SensorControl.h" //sensor pin constants defined here
 #include "DirectionControl.h"
@@ -52,6 +54,7 @@ void loop() {
   //run();
 }
 
+// hardcoded due to problem with hard curves
 void HardCoded(){
 
   // first 

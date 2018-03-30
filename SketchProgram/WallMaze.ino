@@ -1,3 +1,5 @@
+//Author: Jonathan Chan
+
 #include "WheelControl.h" //wheel pin constants defined here
 #include "SensorControl.h" //sensor pin constants defined here
 #include "DirectionControl.h"
@@ -30,6 +32,9 @@ void loop() {
  * 
  */
 
+// Assuming sensor configuration is:
+// Left and right are over the wheels
+// Head is at the front of the robot
 void run(){
 
 // LOW means wall
@@ -52,21 +57,39 @@ void run(){
 
         turnRight();
        }
+
+       // checking left hand side and ensure the head of the robot is pointing greater than parallel to the left wall
+       if(digitalRead(left_sens) == HIGH){
+
+        while(digitalRead(left_sens) == HIGH){
+
+          turnRight();
+        }
+       }
+
+
+       if(digitalRead(left_sens) == LOW){
+        while(digitalRead(left_sens) == LOW){
+          turnRight();
+        }
+       }
+       
      }
 
+    
      if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH){
 
-      //detects wall on left, so spin away to setup for next archLeft
+      //detects wall on left, so turn away to setup for next archLeft
       while(digitalRead(left_sens) == LOW){
 
-        clockwiseSpin();
+        turnRight();
       }
       
      }
 
      if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW){
 
-      // for now spin in place to put the wall on the left
+      // for now move in a circle until it detects a wall on its left sensor. If none, feedback to the operator.
       while(digitalRead(left_sens) == HIGH){
 
         archRight();
