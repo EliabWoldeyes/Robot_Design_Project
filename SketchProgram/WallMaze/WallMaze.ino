@@ -28,6 +28,25 @@ void loop() {
   run();
 }
 
+
+void myRun(){
+  
+  if(leftHigh() || middleHigh()){
+    
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  * 
  */
