@@ -1,5 +1,5 @@
 /*	All function prototypes defined
-	in WheelControl.cpp
+	  in WheelControl.cpp
 */
 
 #ifndef WHEEL_CONTROL_FUNC
@@ -12,10 +12,6 @@
 	// Pins for Motor A
 	const int left_AB = 9;
 	const int left_AA = 10;
-
-	// Pins for sensor inputs
-	const int right_sens = 7;
-	const int left_sens = 8;
 
   // Medium speed
   const int medSpeed = 150;
@@ -32,6 +28,10 @@
 	void rightWheelBackward();
 
 	void rightWheelStop();
+
+  void leftWheelHalf();
+
+  void rightWheelHalf();
 
 
 #endif
