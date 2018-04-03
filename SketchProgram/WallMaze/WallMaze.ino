@@ -45,6 +45,8 @@ void run(){
 
   while(1){
 
+    /* Don't we need to handle the case where neither left or right are low? */
+
    // high means it does not detect the wall, so move in an arch left until it finds it
    while(digitalRead(left_sens) == HIGH || digitalRead(middle_sens) == HIGH){
 
