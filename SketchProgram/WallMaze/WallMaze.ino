@@ -5,6 +5,8 @@
 #include "DirectionControl.h"
 #include "RobotStates.h"
 
+boolean goLeft, goRight = false;
+
 void setup() {
 
   // put your setup code here, to run once:
@@ -25,26 +27,71 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  run();
+  myRun();
 }
 
 
 void myRun(){
+
+  //handle cases with no obstruction directly in front
+  if(middleHigh()){
+    
+    //move forward but keep to the left-hand wall
+    if(leftLow() && rightLow()){
+      archLeft();
+    }
   
-  if(leftHigh() || middleHigh()){
+    //adjust right if it gets too close to the left wall
+    else if(leftLow() && rightHigh()){
+      while(rightHigh() && middleHigh() && leftLow()){
+        turnRight();
+      }
+    }
+
+    /*adjust left if it gets too close to the right wall
+      (might not need this since we always want to go left)
+    */
+    else if(leftHigh() && rightLow()){
+      while(leftHigh() && middleHigh() && rightLow()){
+        turnLeft();
+      }
+    }
+  }
+  
+  //handle cases were the there is an obstruction directly ahead
+  else{
+    //stop so we can determine where an open path is
+    fullStop();
+
+    //reached a corner
+    if(leftLow() && rightHigh()) goRight = true;
+
+    //otherwise default left
+    else goLeft = true;
+    
+    //we want to back up a little to give the robot space to turn if it needs to
+    while(middleLow()) moveBackward();
+
+    if(goRight){
+      while(rightHigh() && middleHigh()){
+//        clockwiseSpin();
+        turnRight();
+      }
+    }
+
+    else if(goLeft){
+      while(leftHigh() && middleHigh()){
+//        counterClockSpin();
+        turnLeft();
+      }
+    }
+
+    //reset turn flags
+    goRight = false;
+    goLeft = false; 
     
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 /*
