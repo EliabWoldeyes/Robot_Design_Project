@@ -81,17 +81,17 @@ void myRun(){
   else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalLow() || leftDiagonalLow())) {
 
     //specific case for if reached a left-hand corner
-    if(leftLow() && rightHigh()){
+    if((leftLow() && rightHigh()) || rightDiagonalHigh()){
       fullStop();
     }
 
 //    //any other case we want to turn left
     else {
-      while (rightDiagonalLow() || getDistance() < THRESHOLD_DISTANCE) counterClockSpin();
+      while (rightDiagonalLow() || getDistance() < THRESHOLD_DISTANCE || leftHigh()) counterClockSpin();
     }
   }
 
-  else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalHigh() && leftDiagonalHigh())) {
+  else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalHigh() || leftDiagonalHigh())) {
     fullStop();
   }
 
