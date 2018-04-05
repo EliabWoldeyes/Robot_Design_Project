@@ -8,7 +8,7 @@ const int echoPin = 4;
 const int trigPin = 3;
 
 //in cm
-const int THRESHOLD_DISTANCE = 5;
+const int THRESHOLD_DISTANCE = 8;
 const int MAX_DISTANCE = 150;
 
 boolean goLeft, goRight = false;
@@ -40,10 +40,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  myRun();
+//  myRun();
 
 //  while (getDistance() < THRESHOLD_DISTANCE) {Serial.print(getDistance(),DEC);Serial.print("\n");}
-//  Serial.print(getDistance(),DEC);Serial.print("\n");
+  Serial.print(getDistance(),DEC);Serial.print("\n");
 
 }
 
@@ -59,7 +59,7 @@ int getDistance(){
   digitalWrite(trigPin, LOW);
   
   // Reads the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPin, HIGH);
+  duration = pulseIn(echoPin, HIGH,600000);
   
   // Calculating the distance
   return (int) duration*0.034/2;
@@ -70,28 +70,35 @@ void myRun(){
 
   //Normal operation with no obstruction ahead
   if (getDistance() > THRESHOLD_DISTANCE) {
-    archLeft();
+//    archLeft();
+    moveForward();
 
-    if((leftLow() && rightHigh()) || leftDiagonalLow()) archRight();
+    if((leftLow() && rightHigh()) || leftDiagonalLow()){
+      archRight();
+//      turnRight();
+    }
 
-    else if((leftHigh() && rightLow()) || rightDiagonalLow()) archLeft();
+    else if((leftHigh() && rightLow()) || rightDiagonalLow()){
+      archLeft();
+//      turnLeft();
+    }
   }
 
   //There's an obstruction ahead
   else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalLow() || leftDiagonalLow())) {
 
     //specific case for if reached a left-hand corner
-    if((leftLow() && rightHigh()) || rightDiagonalHigh()){
+    if(leftLow() && rightHigh()){
       fullStop();
     }
 
-//    //any other case we want to turn left
+    //any other case we want to turn left
     else {
-      while (rightDiagonalLow() || getDistance() < THRESHOLD_DISTANCE || leftHigh()) counterClockSpin();
+//      while (rightDiagonalLow() || getDistance() < THRESHOLD_DISTANCE) counterClockSpin();
     }
   }
 
-  else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalHigh() || leftDiagonalHigh())) {
+  else if (getDistance() < THRESHOLD_DISTANCE && rightDiagonalHigh() && leftDiagonalHigh()) {
     fullStop();
   }
 

@@ -57,6 +57,6 @@ void rightWheelStop()
 }
 
 void rightWheelHalf(){
-  analogWrite(right_BA, 170);
+  analogWrite(right_BA, 180);
   analogWrite(right_BB, 0);   
 }
