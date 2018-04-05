@@ -26,7 +26,7 @@ void leftWheelStop()
 }
 
 void leftWheelHalf(){
-  analogWrite(left_AB, 170);
+  analogWrite(left_AB, 190);
   analogWrite(left_AA, 0);   
 }
 

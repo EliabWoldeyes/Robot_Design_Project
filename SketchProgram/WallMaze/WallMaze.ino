@@ -7,6 +7,10 @@
 const int echoPin = 4;
 const int trigPin = 3;
 
+//in cm
+const int THRESHOLD_DISTANCE = 5;
+const int MAX_DISTANCE = 150;
+
 boolean goLeft, goRight = false;
 
 long duration;
@@ -36,13 +40,16 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-//  myRun();
+  myRun();
 
-  while (getDistance() < 15) Serial.print("DETECTED\n");
+//  while (getDistance() < THRESHOLD_DISTANCE) {Serial.print(getDistance(),DEC);Serial.print("\n");}
+//  Serial.print(getDistance(),DEC);Serial.print("\n");
+
 }
 
 int getDistance(){
   // Clears the trigPin
+  delay(5);
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   
@@ -61,155 +68,32 @@ int getDistance(){
 
 void myRun(){
 
-//  //handle cases with no obstruction directly in front
-//  if(middleHigh()){
-//    
-//    //move forward but keep to the left-hand wall
-////    if(leftLow() && rightLow()){
-//      archLeft();
-////    }
-//  
-//    //adjust right if it gets too close to the left wall
-//    if(leftLow() && rightHigh()){
-//      while(rightHigh() && middleHigh() && leftLow()){
-//        archRight();
-//      }
-//    }
-//
-//    /*adjust left if it gets too close to the right wall
-//      (might not need this since we always want to go left)
-//    */
-//    else if(leftHigh() && rightLow()){
-//      while(leftHigh() && middleHigh() && rightLow()){
-//        archLeft();
-//      }
-//    }
-//  }
-//  
-//  //handle cases were the there is an obstruction directly ahead
-//  else{
-//    //stop so we can determine where an open path is
-//    fullStop();
-//
-//    if(leftLow() && rightHigh()){
-//      while(middleLow()){
-//        clockwiseSpin();
-//      }
-//      archRight();
-//    }
-//
-//    else{
-//      while(middleLow()){
-//        counterClockSpin();
-//      }
-//      archLeft();
-//    }
+  //Normal operation with no obstruction ahead
+  if (getDistance() > THRESHOLD_DISTANCE) {
+    archLeft();
 
-//    //reached a corner
-//    if(leftLow() && rightHigh()) goRight = true;
-//
-//    //otherwise default left
-//    else goLeft = true;
-//    
-//    //we want to back up a little to give the robot space to turn if it needs to
-//    while(middleLow()) moveBackward();
-//
-//    if(goRight){
-//      while(rightHigh() && middleHigh()){
-////        clockwiseSpin();
-//        turnRight();
-//      }
-//    }
-//
-//    else if(goLeft){
-//      while(leftHigh() && middleHigh()){
-////        counterClockSpin();
-//        archLeft();
-//      }
-//    }
-//
-//    //reset turn flags
-//    goRight = false;
-//    goLeft = false; 
-//    
-//  }
-}
+    if((leftLow() && rightHigh()) || leftDiagonalLow()) archRight();
 
+    else if((leftHigh() && rightLow()) || rightDiagonalLow()) archLeft();
+  }
 
-/*
- * 
- */
+  //There's an obstruction ahead
+  else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalLow() || leftDiagonalLow())) {
 
-// Assuming sensor configuration is:
-// Left and right are over the wheels
-// Head is at the front of the robot
-void run(){
+    //specific case for if reached a left-hand corner
+    if(leftLow() && rightHigh()){
+      fullStop();
+    }
 
-// LOW means wall
-// HIGH means no wall
+//    //any other case we want to turn left
+    else {
+      while (rightDiagonalLow() || getDistance() < THRESHOLD_DISTANCE) counterClockSpin();
+    }
+  }
 
-// middle sensor distance adjusted to be about half of left sensor
-// may just ignore right sensor.
+  else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalHigh() && leftDiagonalHigh())) {
+    fullStop();
+  }
 
-//  while(1){
-//
-//    /* Don't we need to handle the case where neither left or right are low? */
-//
-//   // high means it does not detect the wall, so move in an arch left until it finds it
-//   while(digitalRead(left_sens) == HIGH || digitalRead(middle_sens) == HIGH){
-//
-//     archLeft();
-//     
-//     // If both detect a wall, then assume it is a corner.
-//     if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW){
-//
-//       while(digitalRead(middle_sens) == LOW){
-//
-//        turnRight();
-//       }
-//
-//       // checking left hand side and ensure the head of the robot is pointing greater than parallel to the left wall
-//       if(digitalRead(left_sens) == HIGH){
-//
-//        while(digitalRead(left_sens) == HIGH){
-//
-//          turnRight();
-//        }
-//       }
-//
-//
-//       if(digitalRead(left_sens) == LOW){
-//        while(digitalRead(left_sens) == LOW){
-//          turnRight();
-//        }
-//       }
-//       
-//     }
-//
-//    
-//     if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH){
-//
-//      //detects wall on left, so turn away to setup for next archLeft
-//      while(digitalRead(left_sens) == LOW){
-//
-//        turnRight();
-//      }
-//      
-//     }
-//
-//     if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == LOW){
-//
-//      // for now move in a circle until it detects a wall on its left sensor. If none, feedback to the operator.
-//      while(digitalRead(left_sens) == HIGH){
-//
-//        archRight();
-//        
-//      }
-//     }
-//    
-//   }
-//    
-//  }
-  
 }
 
