@@ -92,7 +92,7 @@ void myRun(){
   //Normal operation with no obstruction ahead
   if (getDistance() > THRESHOLD_DISTANCE) {
     //Denis: this moveForward is for what purpose?
-    moveForward();
+//    moveForward();
 //    archLeft();
 
     if(leftLow() || leftDiagonalLow()){
@@ -105,6 +105,10 @@ void myRun(){
       moveForward();
       delayMicroseconds(5);
       archLeft();
+
+      if(rightHigh() && rightDiagonalHigh){
+        while(rightDiagonalHigh()) clockwiseSpin();
+      }
     }
 
     else if(rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
@@ -193,13 +197,7 @@ void myRun(){
 //        }
       }
 
-      startDistance = getDistance();
-
-      while(getDistance() < (startDistance+TURN_DISTANCE)){
-        moveBackward();
-      }
-
-      while(rightDiagonalHigh()) clockwiseSpin();
+      while(leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow() && getDistance() < THRESHOLD_DISTANCE+TURN_DISTANCE) clockwiseSpin();
       
     }
     
