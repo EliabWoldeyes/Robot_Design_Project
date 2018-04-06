@@ -121,25 +121,33 @@ void myRun(){
 ////        Serial.print("\n");
 //        moveForward();
 //      }
-      while (getDistance<THRESHOLD_DISTANCE && rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) moveForward();
-      turnLeft();
+
+//      while (getDistance<THRESHOLD_DISTANCE && rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
+//        moveForward();
+//      }
+
+        turnLeftWide();
     }
 
     else if(rightDiagonalLow() && leftDiagonalLow()){
-      if(leftHigh() && rightLow()){
-        moveForward();
-        delayMicroseconds(5);
-        while(getDistance > THRESHOLD_DISTANCE){
-          counterClockSpin();
-        }
+
+      while(leftHigh()){
+        archBackLeft();
       }
-      else{
-        moveForward();
-        delayMicroseconds(5);
-        while(getDistance > THRESHOLD_DISTANCE){
-          clockwiseSpin();
-        }
-      }
+//      if(leftHigh() && rightLow()){
+//        moveForward();
+//        delayMicroseconds(5);
+//        while(getDistance > THRESHOLD_DISTANCE){
+//          counterClockSpin();
+//        }
+//      }
+//      else{
+//        moveForward();
+//        delayMicroseconds(5);
+//        while(getDistance > THRESHOLD_DISTANCE){
+//          clockwiseSpin();
+//        }
+//      }
     }
 
     else{
@@ -153,7 +161,12 @@ void myRun(){
   //There's an obstruction ahead
   else if (getDistance() < THRESHOLD_DISTANCE) {
 
-    if (leftHigh()){
+    if (rightDiagonalLow() && leftDiagonalLow()){
+      while(leftHigh()){
+        archBackLeft();
+      }
+    }
+    else if (leftHigh()){
       moveForward();
       delayMicroseconds(5);
       while (getDistance() < THRESHOLD_DISTANCE){
