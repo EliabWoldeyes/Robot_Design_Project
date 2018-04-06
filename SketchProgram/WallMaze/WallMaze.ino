@@ -161,12 +161,7 @@ void myRun(){
   //There's an obstruction ahead
   else if (getDistance() < THRESHOLD_DISTANCE) {
 
-    if (rightDiagonalLow() && leftDiagonalLow()){
-      while(leftHigh()){
-        archBackLeft();
-      }
-    }
-    else if (leftHigh()){
+    if (leftHigh()){
       moveForward();
       delayMicroseconds(5);
       while (getDistance() < THRESHOLD_DISTANCE){
@@ -179,6 +174,12 @@ void myRun(){
       delayMicroseconds(5);
       while (getDistance() < THRESHOLD_DISTANCE){
         clockwiseSpin();
+      }
+    }
+
+    else if (rightDiagonalLow() && leftDiagonalLow()){
+      while(leftHigh()){
+        archBackLeft();
       }
     }
 
@@ -210,7 +211,9 @@ void myRun(){
 //        }
       }
 
-      while(leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow() && getDistance() < THRESHOLD_DISTANCE+TURN_DISTANCE) clockwiseSpin();
+      while(leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow() && getDistance() < THRESHOLD_DISTANCE+TURN_DISTANCE){
+        clockwiseSpin();
+      }
       
     }
     
