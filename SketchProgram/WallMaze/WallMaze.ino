@@ -189,6 +189,15 @@ void myRun(){
       clockwiseSpin();
     }
 
+    else if (rightDiagonalHigh() && leftDiagonalHigh()){
+      while(getDistance() < THRESHOLD_DISTANCE){
+        archBackLeft();
+      }
+      while(rightDiagonalHigh() || rightHigh() || leftHigh() || leftDiagonalHigh()){
+        counterClockSpin();
+      }
+    }
+
     else if (leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow()){
 //      moveForward();
 //      delayMicroseconds(5);
