@@ -32,7 +32,6 @@ void setup() {
 
   // Sensors
   pinMode(left_sens, INPUT);
-//  pinMode(middle_sens, INPUT);
   pinMode(right_sens, INPUT);
   pinMode(right_diagonal_sens, INPUT);
   pinMode(left_diagonal_sens, INPUT);
@@ -44,28 +43,6 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   myRun();
-
-//    moveForward();
-//    delay(1000);
-//    fullStop();
-//    delay(2000);
-
-//  while (getDistance() < THRESHOLD_DISTANCE) {Serial.print(getDistance(),DEC);Serial.print("\n");}
-//  Serial.print(getDistance(),DEC);Serial.print("\n");
-
-//if(rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
-//      startDistance = getDistance();
-//      delta = min(LEFT_TURN_DISTANCE,(startDistance-THRESHOLD_DISTANCE));
-//      while ((startDistance - getDistance()) < delta){
-//        Serial.print((startDistance),DEC);
-//        Serial.print("----");
-//        Serial.print((getDistance()),DEC);
-//        Serial.print("\n");
-//        moveForward();
-//      }
-//      turnLeft();
-//    }
-
 }
 
 int getDistance(){
@@ -89,145 +66,73 @@ int getDistance(){
 
 void myRun(){
 
-  //Normal operation with no obstruction ahead
-  if (getDistance() > THRESHOLD_DISTANCE) {
-    //Denis: this moveForward is for what purpose?
-//    moveForward();
-//    archLeft();
+  if (getDistance() > THRESHOLD_DISTANCE){
 
-    if(leftLow() || leftDiagonalLow()){
-      moveForward();
-      delayMicroseconds(5);
-      archRight();
-    }
-
-    else if((rightLow() || rightDiagonalLow())){
-      moveForward();
-      delayMicroseconds(5);
-      archLeft();
-
-      if(rightHigh() && rightDiagonalHigh){
-        while(rightDiagonalHigh()) clockwiseSpin();
-      }
-    }
-
-    else if(rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
-//      startDistance = getDistance();
-//      delta = min(LEFT_TURN_DISTANCE,(startDistance-THRESHOLD_DISTANCE));
-//      while ((startDistance - getDistance()) < delta){
-////        Serial.print((startDistance),DEC);
-////        Serial.print("----");
-////        Serial.print((getDistance()),DEC);
-////        Serial.print("\n");
-//        moveForward();
-//      }
-
-//      while (getDistance<THRESHOLD_DISTANCE && rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
-//        moveForward();
-//      }
-
-        turnLeftWide();
-    }
-
-    else if(rightDiagonalLow() && leftDiagonalLow()){
-
-      while(leftHigh()){
+    if (leftLow() && leftDiagonalLow()){
+      if (rightDiagonalLow()) {
+        if(rightHigh()){
+          while (leftDiagonalLow()) {
+            clockwiseSpin();
+          }
+        }
         archBackLeft();
       }
-//      if(leftHigh() && rightLow()){
-//        moveForward();
-//        delayMicroseconds(5);
-//        while(getDistance > THRESHOLD_DISTANCE){
-//          counterClockSpin();
-//        }
-//      }
-//      else{
-//        moveForward();
-//        delayMicroseconds(5);
-//        while(getDistance > THRESHOLD_DISTANCE){
-//          clockwiseSpin();
-//        }
-//      }
+      else {
+        turnRight(); 
+      }
     }
-
-    else{
+    else if (leftLow() && leftDiagonalHigh()){
       moveForward();
-      delayMicroseconds(5);
-      //Denis: default case, what incuded here and why archleft and turnLeft or smth?
-      archLeft();
+    }
+    else if (leftHigh() && leftDiagonalLow()){
+      if(rightDiagonalLow()){
+        if(rightHigh()){
+          while (leftDiagonalLow()) {
+            clockwiseSpin();
+          }
+        }
+        archBackLeft();
+      }
+      else {
+        turnRight();
+      }
+    }
+    else if (leftHigh() && leftDiagonalHigh()){
+      if (rightDiagonalHigh()){
+        turnLeft();
+      }
+      else{
+        turnLeftWide();
+      }
+    }
+    else if (rightLow() || rightDiagonalLow()){
+      turnLeft();
     }
   }
 
-  //There's an obstruction ahead
-  else if (getDistance() < THRESHOLD_DISTANCE) {
-
-    if (leftHigh()){
-      moveForward();
-      delayMicroseconds(5);
-      while (getDistance() < THRESHOLD_DISTANCE){
-        counterClockSpin();
+  else if (getDistance() <= THRESHOLD_DISTANCE){
+    
+    if (leftDiagonalLow() && rightDiagonalLow()){
+      
+      if (leftHigh() && rightHigh()){
+        archBackLeft();
       }
-    }
-
-    else if (rightHigh()){
-      moveForward();
-      delayMicroseconds(5);
-      while (getDistance() < THRESHOLD_DISTANCE){
+      else if (leftLow() && rightHigh()){
         clockwiseSpin();
       }
-    }
-
-    else if (rightDiagonalLow() && leftDiagonalLow()){
-      while(leftHigh()){
-        archBackLeft();
-      }
-    }
-
-    else if (leftLow() && leftDiagonalLow() && rightDiagonalLow() && rightHigh()){
-      moveForward();
-      delayMicroseconds(5);
-      clockwiseSpin();
-    }
-
-    else if (rightDiagonalHigh() && leftDiagonalHigh()){
-      while(getDistance() < THRESHOLD_DISTANCE){
-        archBackLeft();
-      }
-      while(rightDiagonalHigh() || rightHigh() || leftHigh() || leftDiagonalHigh()){
-        counterClockSpin();
-      }
-    }
-
-    else if (leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow()){
-//      moveForward();
-//      delayMicroseconds(5);
-      while ( !(rightDiagonalHigh() && rightHigh())){
-        moveBackward();
-
-        if(leftLow() || leftDiagonalLow()){
-          archBackRight();
-        }
-        else if(rightLow() || rightDiagonalLow()){
-          archBackLeft();
-        }
-        else moveBackward();
-//        clockwiseSpin();
-//        if (rightDiagonalHigh()){
-//          //Denis: block is for backing, but we have moveForward with delay and then moveBackward without any delay. Hmm?
-//          //moveForward();
-//          delayMicroseconds(5);
-//          moveBackward();
-//        }
-      }
-
-      while(leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow() && getDistance() < THRESHOLD_DISTANCE+TURN_DISTANCE){
+      else if (leftHigh() && rightLow()){
         clockwiseSpin();
       }
       
+      //DEAD END SITUATION
+      else if (leftLow() && rightLow()){
+        while (rightDiagonalLow()){
+          archBackLeft();
+        }
+        clockwiseSpin();
+        delay(500);
+      }
     }
-    
-    else fullStop();
   }
-
 }
 

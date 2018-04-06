@@ -52,6 +52,12 @@ void turnLeft()
   rightWheelForward();
 }
 
+void turnLeftBack()
+{
+  leftWheelStop();
+  rightWheelBackward();
+}
+
 //turns left (pivoting on left wheel)
 void turnLeftWide()
 {
