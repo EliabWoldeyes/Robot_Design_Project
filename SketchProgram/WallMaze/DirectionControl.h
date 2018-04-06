@@ -13,8 +13,14 @@
 
   void archLeft();
 
+  void archBackLeft();
+
   void archRight();
 
+  void archBackRight();
+
+	void turnLeftWide();
+	
 	void turnLeft();
 
 	void turnRight();

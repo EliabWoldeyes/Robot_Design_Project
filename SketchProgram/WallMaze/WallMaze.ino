@@ -9,8 +9,11 @@ const int trigPin = 3;
 
 //in cm
 const int THRESHOLD_DISTANCE = 5;
+const int TURN_DISTANCE = 8; //distance to clear before making a left turn so wheel doesn't get stuck on the wall
 const int MAX_DISTANCE = 150;
 
+int startDistance = 0;
+int delta = 0;
 boolean goLeft, goRight = false;
 
 long duration;
@@ -42,14 +45,32 @@ void loop() {
   // put your main code here, to run repeatedly:
   myRun();
 
+//    moveForward();
+//    delay(1000);
+//    fullStop();
+//    delay(2000);
+
 //  while (getDistance() < THRESHOLD_DISTANCE) {Serial.print(getDistance(),DEC);Serial.print("\n");}
 //  Serial.print(getDistance(),DEC);Serial.print("\n");
+
+//if(rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
+//      startDistance = getDistance();
+//      delta = min(LEFT_TURN_DISTANCE,(startDistance-THRESHOLD_DISTANCE));
+//      while ((startDistance - getDistance()) < delta){
+//        Serial.print((startDistance),DEC);
+//        Serial.print("----");
+//        Serial.print((getDistance()),DEC);
+//        Serial.print("\n");
+//        moveForward();
+//      }
+//      turnLeft();
+//    }
 
 }
 
 int getDistance(){
   // Clears the trigPin
-  delay(5);
+  delay(50);
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   
@@ -59,10 +80,10 @@ int getDistance(){
   digitalWrite(trigPin, LOW);
   
   // Reads the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPin, HIGH,600000);
+  duration = pulseIn(echoPin, HIGH);
   
   // Calculating the distance
-  return (int) duration*0.034/2;
+  return ((int) duration*0.034/2 < 0) ? 0 : (int) duration*0.034/2;
 }
 
 
@@ -70,6 +91,7 @@ void myRun(){
 
   //Normal operation with no obstruction ahead
   if (getDistance() > THRESHOLD_DISTANCE) {
+    //Denis: this moveForward is for what purpose?
     moveForward();
 //    archLeft();
 
@@ -86,6 +108,16 @@ void myRun(){
     }
 
     else if(rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
+//      startDistance = getDistance();
+//      delta = min(LEFT_TURN_DISTANCE,(startDistance-THRESHOLD_DISTANCE));
+//      while ((startDistance - getDistance()) < delta){
+////        Serial.print((startDistance),DEC);
+////        Serial.print("----");
+////        Serial.print((getDistance()),DEC);
+////        Serial.print("\n");
+//        moveForward();
+//      }
+      while (getDistance<THRESHOLD_DISTANCE && rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) moveForward();
       turnLeft();
     }
 
@@ -109,6 +141,7 @@ void myRun(){
     else{
       moveForward();
       delayMicroseconds(5);
+      //Denis: default case, what incuded here and why archleft and turnLeft or smth?
       archLeft();
     }
   }
@@ -139,16 +172,35 @@ void myRun(){
     }
 
     else if (leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow()){
-      moveForward();
-      delayMicroseconds(5);
-      while (getDistance() < THRESHOLD_DISTANCE && rightDiagonalLow() && rightLow()){
-        clockwiseSpin();
-        if (rightDiagonalHigh()){
-          moveForward();
-          delayMicroseconds(5);
-          moveBackward();
+//      moveForward();
+//      delayMicroseconds(5);
+      while ( !(rightDiagonalHigh() && rightHigh())){
+        moveBackward();
+
+        if(leftLow() || leftDiagonalLow()){
+          archBackRight();
         }
+        else if(rightLow() || rightDiagonalLow()){
+          archBackLeft();
+        }
+        else moveBackward();
+//        clockwiseSpin();
+//        if (rightDiagonalHigh()){
+//          //Denis: block is for backing, but we have moveForward with delay and then moveBackward without any delay. Hmm?
+//          //moveForward();
+//          delayMicroseconds(5);
+//          moveBackward();
+//        }
       }
+
+      startDistance = getDistance();
+
+      while(getDistance() < (startDistance+TURN_DISTANCE)){
+        moveBackward();
+      }
+
+      while(rightDiagonalHigh()) clockwiseSpin();
+      
     }
     
     else fullStop();

@@ -25,8 +25,19 @@ void leftWheelStop()
 
 }
 
+void leftWheelHalfBack()
+{
+  analogWrite(left_AB, 0);
+  analogWrite(left_AA, 180);   // Opposite of L911OS chart
+}
+
 void leftWheelHalf(){
   analogWrite(left_AB, 180);
+  analogWrite(left_AA, 0);   
+}
+
+void leftWheelQuarter(){
+  analogWrite(left_AB, 100);
   analogWrite(left_AA, 0);   
 }
 
@@ -53,7 +64,12 @@ void rightWheelStop()
 {
   digitalWrite(right_BB, LOW);
   digitalWrite(right_BA, LOW);
+}
 
+void rightWheelHalfBack()
+{
+  analogWrite(right_BB, 180);
+  analogWrite(right_BA, 0); // Same as L911OS chart
 }
 
 void rightWheelHalf(){

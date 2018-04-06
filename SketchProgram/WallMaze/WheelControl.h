@@ -29,9 +29,15 @@
 
 	void rightWheelStop();
 
+  void leftWheelQuarter();
+
   void leftWheelHalf();
 
   void rightWheelHalf();
+
+  void rightWheelHalfBack();
+
+  void leftWheelHalfBack();
 
 
 #endif

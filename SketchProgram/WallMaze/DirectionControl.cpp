@@ -25,9 +25,19 @@ void archLeft(){
   rightWheelForward();
 }
 
+void archBackLeft(){
+  leftWheelHalfBack();
+  rightWheelBackward();
+}
+
 void archRight(){
   leftWheelForward();
   rightWheelHalf();
+}
+
+void archBackRight(){
+  rightWheelHalfBack();
+  leftWheelBackward();
 }
 
 /*	NOTE: turnLeft() and turnRight() do not control
@@ -35,10 +45,17 @@ void archRight(){
 	will keep spinning.
 */
 
-//turns left (pivoting on left wheel)
+//turns left (pivoting on left wheel) with wide berth
 void turnLeft()
 {
-	leftWheelStop();
+  leftWheelStop();
+  rightWheelForward();
+}
+
+//turns left (pivoting on left wheel)
+void turnLeftWide()
+{
+	leftWheelQuarter();
 	rightWheelForward();
 }
 
