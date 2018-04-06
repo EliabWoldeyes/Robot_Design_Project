@@ -8,7 +8,7 @@ const int echoPin = 4;
 const int trigPin = 3;
 
 //in cm
-const int THRESHOLD_DISTANCE = 8;
+const int THRESHOLD_DISTANCE = 5;
 const int MAX_DISTANCE = 150;
 
 boolean goLeft, goRight = false;
@@ -40,10 +40,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-//  myRun();
+  myRun();
 
 //  while (getDistance() < THRESHOLD_DISTANCE) {Serial.print(getDistance(),DEC);Serial.print("\n");}
-  Serial.print(getDistance(),DEC);Serial.print("\n");
+//  Serial.print(getDistance(),DEC);Serial.print("\n");
 
 }
 
@@ -70,36 +70,88 @@ void myRun(){
 
   //Normal operation with no obstruction ahead
   if (getDistance() > THRESHOLD_DISTANCE) {
-//    archLeft();
     moveForward();
+//    archLeft();
 
-    if((leftLow() && rightHigh()) || leftDiagonalLow()){
+    if(leftLow() || leftDiagonalLow()){
+      moveForward();
+      delayMicroseconds(5);
       archRight();
-//      turnRight();
     }
 
-    else if((leftHigh() && rightLow()) || rightDiagonalLow()){
+    else if((rightLow() || rightDiagonalLow())){
+      moveForward();
+      delayMicroseconds(5);
       archLeft();
-//      turnLeft();
+    }
+
+    else if(rightDiagonalHigh() && rightHigh() && leftDiagonalHigh() && leftHigh()) {
+      turnLeft();
+    }
+
+    else if(rightDiagonalLow() && leftDiagonalLow()){
+      if(leftHigh() && rightLow()){
+        moveForward();
+        delayMicroseconds(5);
+        while(getDistance > THRESHOLD_DISTANCE){
+          counterClockSpin();
+        }
+      }
+      else{
+        moveForward();
+        delayMicroseconds(5);
+        while(getDistance > THRESHOLD_DISTANCE){
+          clockwiseSpin();
+        }
+      }
+    }
+
+    else{
+      moveForward();
+      delayMicroseconds(5);
+      archLeft();
     }
   }
 
   //There's an obstruction ahead
-  else if ((getDistance() < THRESHOLD_DISTANCE) && (rightDiagonalLow() || leftDiagonalLow())) {
+  else if (getDistance() < THRESHOLD_DISTANCE) {
 
-    //specific case for if reached a left-hand corner
-    if(leftLow() && rightHigh()){
-      fullStop();
+    if (leftHigh()){
+      moveForward();
+      delayMicroseconds(5);
+      while (getDistance() < THRESHOLD_DISTANCE){
+        counterClockSpin();
+      }
     }
 
-    //any other case we want to turn left
-    else {
-//      while (rightDiagonalLow() || getDistance() < THRESHOLD_DISTANCE) counterClockSpin();
+    else if (rightHigh()){
+      moveForward();
+      delayMicroseconds(5);
+      while (getDistance() < THRESHOLD_DISTANCE){
+        clockwiseSpin();
+      }
     }
-  }
 
-  else if (getDistance() < THRESHOLD_DISTANCE && rightDiagonalHigh() && leftDiagonalHigh()) {
-    fullStop();
+    else if (leftLow() && leftDiagonalLow() && rightDiagonalLow() && rightHigh()){
+      moveForward();
+      delayMicroseconds(5);
+      clockwiseSpin();
+    }
+
+    else if (leftLow() && leftDiagonalLow() && rightLow() && rightDiagonalLow()){
+      moveForward();
+      delayMicroseconds(5);
+      while (getDistance() < THRESHOLD_DISTANCE && rightDiagonalLow() && rightLow()){
+        clockwiseSpin();
+        if (rightDiagonalHigh()){
+          moveForward();
+          delayMicroseconds(5);
+          moveBackward();
+        }
+      }
+    }
+    
+    else fullStop();
   }
 
 }
