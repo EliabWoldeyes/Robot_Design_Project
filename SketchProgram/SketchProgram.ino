@@ -50,14 +50,14 @@ void setup() {
 
  
 void loop() {
-  HardCoded();
-  //run();
+  HardCoded();  // Final solution was hardcoded.
+  //run();  // self explore doesn't operate correctly at shaprer curves, some how will get into the state that matches "right Hard turn" and turn off track.
 }
 
 // hardcoded due to problem with hard curves
 void HardCoded(){
 
-  // first 
+  // first section of maze, just follow line and section ends with hard turn left
   while(1){
     if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
     {
@@ -105,17 +105,20 @@ void HardCoded(){
       fullStop();
       
     }
+    // move forward a little so the turn will align correctly
    if (digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
       fullStop();
       moveForward();
       delay(200);
       fullStop();
   
+     // spin robot left if middle on black tape. 
       while(digitalRead(middle_sens) == HIGH){
         turnLeft();
       }
       fullStop();
 
+      // spin robot left until middle sensor aligns with the left black tape of the junction
       while(digitalRead(middle_sens) == LOW){
         counterClockSpin();
       }
@@ -125,7 +128,8 @@ void HardCoded(){
   }
   // First end ---
 
-  // Second, left bend
+  // Second, left curve section, follow with only side sensors while ignoring middle so a hard turn cannot occur
+  // section ends when hard turn right
   while(1){
     if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
     {
@@ -181,14 +185,14 @@ void HardCoded(){
       fullStop();
       
       // turn right
-          // counter clock spin middle sensor off black if "+" junction if "+"
+          // clock spin middle sensor off black if "+" junction if "+"
       while(digitalRead(middle_sens) == HIGH){
         //clockwiseSpin();
         turnRight();
       }
       fullStop();
   
-      // counter clock spin middle to the left black line of the junction.
+      // clock spin middle to the right black line of the junction.
       while(digitalRead(middle_sens) == LOW){
         //clockwiseSpin();
         turnRight();
@@ -202,7 +206,7 @@ void HardCoded(){
 
   // second end
 
-  // third
+  // third, follow line and section ends with hard turn left
   while(1){
      if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
     {
@@ -275,7 +279,7 @@ void HardCoded(){
   }
   //third end
 
-  // fourth
+  // fourth, follow line and section ends with hard turn right
   while(1){
      if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
     {
@@ -331,14 +335,14 @@ void HardCoded(){
         fullStop();
         
         // turn right
-            // counter clock spin middle sensor off black if "+" junction if "+"
+            // clock spin middle sensor off black if "+" junction if "+"
         while(digitalRead(middle_sens) == HIGH){
           //clockwiseSpin();
           turnRight();
         }
         fullStop();
     
-        // counter clock spin middle to the left black line of the junction.
+        // clock spin middle to the right black line of the junction.
         while(digitalRead(middle_sens) == LOW){
           //clockwiseSpin();
           turnRight();
@@ -349,7 +353,7 @@ void HardCoded(){
         break;
       }
     }
-  //fifth
+  //fifth, follow line and section ends with hard turn right
     while(1){
       if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
     {
@@ -404,14 +408,14 @@ void HardCoded(){
         fullStop();
         
         // turn right
-            // counter clock spin middle sensor off black if "+" junction if "+"
+            // clock spin middle sensor off black if "+" junction if "+"
         while(digitalRead(middle_sens) == HIGH){
           //clockwiseSpin();
           turnRight();
         }
         fullStop();
     
-        // counter clock spin middle to the left black line of the junction.
+        // clock spin middle to the right black line of the junction.
         while(digitalRead(middle_sens) == LOW){
           //clockwiseSpin();
           turnRight();
@@ -424,7 +428,7 @@ void HardCoded(){
     }
     //fifth end
 
-    //sixth
+    //sixth, just follow the number of tight turns until end.
     while(1){
        if(digitalRead(left_sens) == LOW && digitalRead(right_sens) == LOW)
     {
@@ -579,16 +583,17 @@ void HardCoded(){
     
 }
   
+// ------------------------ Non hard coded, self explore --------------
+// Doesn't operate correctly at shaprer curves, some how will get into the state that matches "right Hard turn" and turn off track.
 
-
-/* FSM
+/* Finite State machine states
  * #1: 010 - Forward
  * #2: 000 - Dead end and correction.
  * #3: 100 001  - Corrections.
  * #4: 110 011  - Hard turns.
  * #5: 101      - T junction.    
  * #6: 111      - END    
- * "+" junction ingored, if needed the code is ready to differentiate * END and +
+ * "+" junction ingored, if needed the code is ready to differentiate END and + saved elsewhere.
  */
 
 
@@ -876,7 +881,9 @@ void run(){
   }
   }
 }
+// -----------------
 
+// Not currently used
 // 3 sensor always choose left turn at junctions
 int End_OR_turnleft(){
   // Check if all sensors detect black. Could be END block or "+" junction
