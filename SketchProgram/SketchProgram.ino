@@ -5,15 +5,8 @@
 #include "DirectionControl.h"
 #include "RobotStates.h"
 
-#define STATES 4
-
 // Black is low from sensor, but digitalRead as high
 // White is high from sensor, but digitalRead as low
-
-RobotState robotState = {
-  FORWARD,   //previous state
-  FORWARD    //current state
-};
 
 int intialized = 0;
 int currState = 0;  // current junction
@@ -177,6 +170,8 @@ void HardCoded(){
       fullStop();
       
     }
+    
+    // end of maze section condition
    if(digitalRead(left_sens) == HIGH &&digitalRead(right_sens) == HIGH){
       fullStop();
 
