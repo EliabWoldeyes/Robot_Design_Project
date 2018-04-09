@@ -593,7 +593,7 @@ void HardCoded(){
 
 
 void run(){
-  int ignoreFlag = 0;
+  int ignoreFlag = 0; // Flag for ignoring next hard turn
   while(1){
   // #1 If left and right sensors see white and middle sensors detects the black line.
   if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW)
@@ -660,7 +660,7 @@ void run(){
     // Align middle sensor
     else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == LOW && digitalRead(right_sens) == HIGH)
     {
-      ignoreFlag = 1;
+      ignoreFlag = 1; // Set flag, so next hard turn is ignored
       while(digitalRead(middle_sens) == LOW)
       {
         //clockwiseSpin();
@@ -765,7 +765,7 @@ void run(){
   // Left turn
   else if(digitalRead(left_sens) == HIGH && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == LOW){
 
-     if(ignoreFlag == 0){
+     if(ignoreFlag == 0){ // Make the hard turn since flag is 0
       moveForward();
       delay(200);
       fullStop();
@@ -789,7 +789,7 @@ void run(){
       }
       fullStop();
     } else {
-      ignoreFlag = 0;   
+      ignoreFlag = 0;   // reset flag to 0, since it has ignored this turn.
     }
   }
 
