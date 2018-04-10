@@ -59,6 +59,8 @@ void HardCoded(){
       moveForward();
       }
     }
+    
+    // re-align left
     else if(digitalRead(left_sens) == HIGH && digitalRead(right_sens) == LOW){
     // If left sensor is HIGH, detects the black line, adjust left.
     // case where middle is not one black
@@ -98,8 +100,9 @@ void HardCoded(){
       fullStop();
       
     }
-    // move forward a little so the turn will align correctly
+    // allow robot to get into a corner alignment.
    if (digitalRead(left_sens) == HIGH && digitalRead(right_sens) == HIGH){
+     // move forward a little so the turn will align correctly
       fullStop();
       moveForward();
       delay(200);
@@ -171,7 +174,7 @@ void HardCoded(){
       
     }
     
-    // end of maze section condition
+    //maze section end condition
    if(digitalRead(left_sens) == HIGH &&digitalRead(right_sens) == HIGH){
       fullStop();
 
@@ -793,7 +796,7 @@ void run(){
     }
   }
 
-  // right turn
+  // #4 Hard right turn
   else if(digitalRead(left_sens) == LOW && digitalRead(middle_sens) == HIGH && digitalRead(right_sens) == HIGH)
     {
     
