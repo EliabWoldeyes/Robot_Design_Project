@@ -9,12 +9,6 @@ const int trigPin = 3;
 
 //in cm
 const int THRESHOLD_DISTANCE = 5;
-const int TURN_DISTANCE = 8; //distance to clear before making a left turn so wheel doesn't get stuck on the wall
-const int MAX_DISTANCE = 150;
-
-int startDistance = 0;
-int delta = 0;
-boolean goLeft, goRight = false;
 
 long duration;
 
@@ -46,8 +40,13 @@ void loop() {
 }
 
 int getDistance(){
-  // Clears the trigPin
+  // This delay reduces the frequency of calls to the ultrasonic sensor.
+  // Our team found we would get inconsisnent results when polling the
+  // sensor more than 60 times per second. This delay is a safeguard
+  // to reduce the frequency.
   delay(50);
+
+  // Clears the trigPin
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   
@@ -63,9 +62,16 @@ int getDistance(){
   return ((int) duration*0.034/2 < 0) ? 0 : (int) duration*0.034/2;
 }
 
-
+/*  Every meaningful sensor combination is exhaustively checked. This is 
+ *  possible since we don't have a lot of sensors. The priority check is
+ *  the left and left diagonal IR sensors since we always want to follow
+ *  the left-hand wall. The direction is adjusted based on the case and
+ *  the looping nature of the arduino program self-corrects the robot's
+ *  direction every iteration.
+ */
 void myRun(){
 
+  // Processing when there is no obstacle ahead -------------------->
   if (getDistance() > THRESHOLD_DISTANCE){
 
     if (leftLow() && leftDiagonalLow()){
@@ -110,6 +116,7 @@ void myRun(){
     }
   }
 
+  // Processing when there is an obstacle -------------------------->
   else if (getDistance() <= THRESHOLD_DISTANCE){
     
     if (leftDiagonalLow() && rightDiagonalLow()){

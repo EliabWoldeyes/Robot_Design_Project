@@ -13,10 +13,6 @@
 	const int left_AB = 9;
 	const int left_AA = 10;
 
-  // Medium speed
-  const int medSpeed = 150;
-  const int rightSpeed = medSpeed + 20;
-
 	void leftWheelForward();
 
 	void leftWheelBackward();

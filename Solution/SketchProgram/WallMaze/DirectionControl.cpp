@@ -20,14 +20,28 @@ void fullStop()
 	rightWheelStop();
 }
 
+//move forward hanging to the left
 void archLeft(){
   leftWheelHalf();
-  leftWheelForward();
+  rightWheelForward();
 }
 
+//move backwards hanging to the left
+void archBackLeft(){
+  leftWheelHalfBack();
+  rightWheelBackward();
+}
+
+//move forwards hanging to the right
 void archRight(){
   leftWheelForward();
   rightWheelHalf();
+}
+
+//move backwards hanging to the right
+void archBackRight(){
+  rightWheelHalfBack();
+  leftWheelBackward();
 }
 
 /*	NOTE: turnLeft() and turnRight() do not control
@@ -35,10 +49,23 @@ void archRight(){
 	will keep spinning.
 */
 
-//turns left (pivoting on left wheel)
+//turns left (pivoting on left wheel) with wide berth
 void turnLeft()
 {
-	leftWheelStop();
+  leftWheelStop();
+  rightWheelForward();
+}
+
+void turnLeftBack()
+{
+  leftWheelStop();
+  rightWheelBackward();
+}
+
+//turns left (pivoting on left wheel)
+void turnLeftWide()
+{
+	leftWheelQuarter();
 	rightWheelForward();
 }
 
@@ -48,6 +75,7 @@ void turnRight()
 	leftWheelForward();
 	rightWheelStop();
 }
+
 // spinning may be more efficient than pivots. Something to experiment with.
 // Clock wise spin the robot
 void clockwiseSpin()
@@ -61,30 +89,5 @@ void counterClockSpin()
 {
 	leftWheelBackward();
 	rightWheelForward();
-}
-
-/*	Attempt at 90 degree turn functions. Delay is
-	hardcoded from observing approximately 90
-	degree turn.
-	
-	Delay value is only valid when using USB power
-	source. Battery power source spins motor too
-	fast.
-*/
-
-void turnLeft90Degrees()
-{
-	fullStop();
-	turnLeft();
-	delay(700);
-	fullStop();
-}
-
-void turnRight90Degrees()
-{
-	fullStop();
-	turnLeft();
-	delay(700);
-	fullStop();
 }
 

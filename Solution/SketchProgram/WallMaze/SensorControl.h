@@ -9,7 +9,6 @@
   // White is high from sensor, but digitalRead as low
 
 	// Pins for sensor inputs
-//  const int middle_sens = 12;
   const int left_sens = 8;
   const int left_diagonal_sens = 12;
 	const int right_sens = 7;
@@ -24,9 +23,6 @@
 
   boolean leftDiagonalLow();
   boolean leftDiagonalHigh();
-
-//  boolean middleLow();
-//  boolean middleHigh();
 
 	boolean rightLow();
 	boolean rightHigh();

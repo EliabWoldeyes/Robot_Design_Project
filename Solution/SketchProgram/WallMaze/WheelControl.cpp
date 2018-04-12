@@ -22,20 +22,22 @@ void leftWheelStop()
 {
   digitalWrite(left_AB, LOW);
   digitalWrite(left_AA, LOW);
-
 }
 
+//turn the left wheel backwards at approximately half speed (tested value)
 void leftWheelHalfBack()
 {
   analogWrite(left_AB, 0);
   analogWrite(left_AA, 180);   // Opposite of L911OS chart
 }
 
+//turn the left wheel forwards at approximately half speed (tested value)
 void leftWheelHalf(){
   analogWrite(left_AB, 180);
   analogWrite(left_AA, 0);   
 }
 
+//turn the left wheel forward at approximately a quarter full speed (tested value)
 void leftWheelQuarter(){
   analogWrite(left_AB, 100);
   analogWrite(left_AA, 0);   
@@ -49,7 +51,6 @@ void rightWheelForward()
 {
   digitalWrite(right_BB, LOW);
   digitalWrite(right_BA, HIGH); // Same as L911OS chart
-
 }
 
 //turn the right wheel backward
@@ -66,12 +67,14 @@ void rightWheelStop()
   digitalWrite(right_BA, LOW);
 }
 
+//turn the right wheel backwards at approximately half speed (tested value)
 void rightWheelHalfBack()
 {
   analogWrite(right_BB, 180);
   analogWrite(right_BA, 0); // Same as L911OS chart
 }
 
+//turn the right wheel forwards at approximately half speed (tested value)
 void rightWheelHalf(){
   analogWrite(right_BA, 180);
   analogWrite(right_BB, 0);   

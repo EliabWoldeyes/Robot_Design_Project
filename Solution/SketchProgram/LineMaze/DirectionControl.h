@@ -13,25 +13,14 @@
 
   void archLeft();
 
-  void archBackLeft();
-
   void archRight();
 
-  void archBackRight();
-
-	void turnLeftWide();
-	
 	void turnLeft();
-
-  void turnLeftBack();
 
 	void turnRight();
 
 	void clockwiseSpin();
+ 
 	void counterClockSpin();
-
-	void turnLeft90Degrees();
-
-	void turnRight90Degrees();
 
 #endif
